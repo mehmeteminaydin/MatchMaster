@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Dragging : MonoBehaviour
 {
+    private int counter = 10; // I have created 10 twin objects. I want to check if all of them are destroyed.
     private float dist;
     private bool dragging = false;
     private bool isLeft = false;
@@ -74,19 +75,20 @@ public class Dragging : MonoBehaviour
 
             float distanceLeft = Vector3.Distance(toDrag.position, leftHole.position);
             float distanceRight = Vector3.Distance(toDrag.position, rightHole.position);
+            Debug.Log(distanceLeft);
 
-            if (distanceLeft <= 6.0f && !isLeft)
+            if (distanceLeft <= 14 && !isLeft)
             {
-                toDrag.GetComponent<BoxCollider>().enabled = false;
-                toDrag.position = new Vector3(leftHole.position.x, tempLocation.y, leftHole.position.z); // Keep the Y position unchanged
+                //toDrag.GetComponent<BoxCollider>().enabled = false;
+                toDrag.position = new Vector3(leftHole.position.x, leftHole.position.y , leftHole.position.z);
                 leftOriginalPosition = tempLocation;
                 isLeft = true;
                 toDragObjectLeft = toDrag.gameObject;
             }
-            else if (distanceRight <= 6.0f && !isRight)
+            else if (distanceRight <= 14 && !isRight)
             {
-                toDrag.GetComponent<BoxCollider>().enabled = false;
-                toDrag.position = new Vector3(rightHole.position.x, tempLocation.y, rightHole.position.z); // Keep the Y position unchanged
+                //toDrag.GetComponent<BoxCollider>().enabled = false;
+                toDrag.position = new Vector3(rightHole.position.x, rightHole.position.y, rightHole.position.z);
                 rightOriginalPosition = tempLocation;
                 isRight = true;
                 toDragObjectRight = toDrag.gameObject;
@@ -95,13 +97,26 @@ public class Dragging : MonoBehaviour
 
         if (isLeft && isRight)
         {
-            toDragObjectLeft.transform.position = new Vector3(leftOriginalPosition.x, toDragObjectLeft.transform.position.y, leftOriginalPosition.z); // Keep the Y position unchanged
-            toDragObjectRight.transform.position = new Vector3(rightOriginalPosition.x, toDragObjectRight.transform.position.y, rightOriginalPosition.z); // Keep the Y position unchanged
-            toDragObjectLeft.GetComponent<BoxCollider>().enabled = true;
-            toDragObjectRight.GetComponent<BoxCollider>().enabled = true;
+            // check the id of the objects if matches then destroy them
+            if(toDragObjectLeft.GetComponent<ObjectID>().id == toDragObjectRight.GetComponent<ObjectID>().id)
+            {
+                Destroy(toDragObjectLeft);
+                Destroy(toDragObjectRight);
+                counter--;
+            }
+            else{
+                toDragObjectLeft.transform.position = new Vector3(leftOriginalPosition.x, leftOriginalPosition.y, leftOriginalPosition.z); // Keep the Y position unchanged
+                toDragObjectRight.transform.position = new Vector3(rightOriginalPosition.x, rightOriginalPosition.y, rightOriginalPosition.z); // Keep the Y position unchanged
+                //toDragObjectLeft.GetComponent<BoxCollider>().enabled = true;
+                //toDragObjectRight.GetComponent<BoxCollider>().enabled = true;
+            }
 
             isLeft = false;
             isRight = false;
+        }
+        if (counter == 0)
+        {
+            Debug.Log("You Win!");
         }
     }
 }

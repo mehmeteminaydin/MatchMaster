@@ -15,7 +15,15 @@ public class ObjectController : MonoBehaviour
     void Start()
     {
         CreateNumberList();
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject newObject = Instantiate(objectList[objectNumberList[i]]);
+            GeneratePosition();
+            Vector3 position = new Vector3(x, 530, z);
+            newObject.transform.position = position;
+
+        }
+        for (int i = 0; i < 10; i++)
         {
             GameObject newObject = Instantiate(objectList[objectNumberList[i]]);
             GeneratePosition();
