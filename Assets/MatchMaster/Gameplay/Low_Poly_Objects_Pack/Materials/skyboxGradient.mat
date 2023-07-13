@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: skyboxGradient
+  m_Shader: {fileID: 4800000, guid: 58557bb7b4989214787f0bb1acd69bfc, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - TCP2_DISABLE_WRAPPED_LIGHT
+  - TCP2_MOBILE
+  - TCP2_REFLECTIONS_FRESNEL
+  - TCP2_RIM_LIGHTING
+  - TCP2_RIM_LIGHTING_LIGHTMASK
+  - TCP2_SPECULAR
+  - TCP2_UV_NORMALS_FULL
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _Offset: -0.388
+    - _ViewSpace: 0
+    - _Width: 0.471
+    m_Colors:
+    - _BottomColor: {r: 1, g: 0.6926503, b: 0.39308167, a: 1}
+    - _TopColor: {r: 1, g: 0.945606, b: 0.7987421, a: 1}
+  m_BuildTextureStacks: []
