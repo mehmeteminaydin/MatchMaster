@@ -608,8 +608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be77db977db340bcbcd063faca0dbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHole: {fileID: 840824709}
-  rightHole: {fileID: 1411409466}
+  LeftHole: {fileID: 840824709}
+  RightHole: {fileID: 1411409466}
 --- !u!1 &1411409465
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,8 +766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a9e7a13ac3540a1a97bfe260870a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectNumberList: 
-  objectList:
+  ObjectNumberList: 
+  ObjectList:
   - {fileID: 5447911256226605517, guid: c2c4e6774e94ec4468e0d3eb7217189c, type: 3}
   - {fileID: 5616088541985443967, guid: 32699a72b41c9eb40b27a235463abd70, type: 3}
   - {fileID: 259519909637523971, guid: 0561d4382afcfb5449f7767cfe61183e, type: 3}

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ObjectID : MonoBehaviour
 {
+    // I have assigned the id's to the objects in the inspector. 
+    //Therefore, if I change the name, I need to assign the ids again.
     public int id;
 
-    //  I want to objects to be kept in the specific area in the game.
-    //They should be stay between the walls (the up left corner is = (x = 356, z = -1023), the bottom right corner is = (x = 420, z = -1170))
+    // the up left corner is = (x = 356, z = -1023), the bottom right corner is = (x = 420, z = -1170)
 
     void Update()
     {
