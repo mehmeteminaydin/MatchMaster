@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Dragging : MonoBehaviour
 {
+
+    public TMPro.TextMeshProUGUI TimerText;
+    public float TotalTime = 300f; // Total time in seconds (5 minutes)
+
     public Transform LeftHole;
     public Transform RightHole;
 
@@ -22,9 +26,31 @@ public class Dragging : MonoBehaviour
     private Vector3 _tempLocation;
     private Transform _toDrag;
 
+    private float _currentTime;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        _currentTime = TotalTime;
+    }
     // Update is called once per frame
     void Update()
     {
+
+        _currentTime -= Time.deltaTime;
+
+        // Calculate minutes and seconds
+        int minutes = Mathf.FloorToInt(_currentTime / 60f);
+        int seconds = Mathf.FloorToInt(_currentTime % 60f);
+
+        //update the UI text with the current time
+        TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        if (_currentTime <= 0)
+        {
+            Debug.Log("You Lose!");
+        }
+
         Vector3 v3;
         if (Input.touchCount != 1)
         {
