@@ -26,6 +26,9 @@ public class Dragging : MonoBehaviour
     private Vector3 _tempLocation;
     private Transform _toDrag;
 
+    private float _xOffset = 0;
+    private float _zOffset = 0;
+
     private float _currentTime;
 
     // Start is called before the first frame update
@@ -61,6 +64,8 @@ public class Dragging : MonoBehaviour
         Touch touch = Input.touches[0];
         Vector3 pos = touch.position;
 
+        
+
         if (touch.phase == TouchPhase.Began)
         {
             Ray ray = Camera.main.ScreenPointToRay(pos);
@@ -76,6 +81,10 @@ public class Dragging : MonoBehaviour
                     v3 = Camera.main.ScreenToWorldPoint(v3);
                     _tempLocation = _toDrag.position;
                     _dragging = true;
+                    // calculate the offset btw touch position and the object pivot position
+                    _xOffset = _toDrag.gameObject.transform.position.x - hit.point.x;
+                    _zOffset = _toDrag.gameObject.transform.position.z - hit.point.z;
+
                 }
             }
         }
@@ -90,7 +99,9 @@ public class Dragging : MonoBehaviour
 
             v3 = new Vector3(Screen.width - Input.mousePosition.x, Screen.height - Input.mousePosition.y, _dist); // Invert the mouse input direction
             v3 = Camera.main.ScreenToWorldPoint(v3);
-            _toDrag.position = new Vector3(v3.x, _tempLocation.y, v3.z); // Keep the Y position unchanged
+            v3.x += _xOffset;
+            v3.z += _zOffset;
+            _toDrag.position = new Vector3(v3.x , _tempLocation.y, v3.z); // Keep the Y position unchanged
         }
 
         if (_dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
