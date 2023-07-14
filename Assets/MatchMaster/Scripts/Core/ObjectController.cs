@@ -6,28 +6,30 @@ public class ObjectController : MonoBehaviour
 {
     public int[] ObjectNumberList;
     public List<GameObject> ObjectList;
+    public int Level1ObjectNumber = 20;
 
     private System.Random _random = new System.Random();
-    private int _xCoor = 400;
-    private int _zCoor = -1100;
+    private int _xCoor = 380;
+    private int _zCoor = -1070;
 
     // Start is called before the first frame update
     void Start()
     {
+        Physics.gravity = Physics.gravity * 9f;
         CreateNumberList();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Level1ObjectNumber; i++)
         {
+            // create the first object
             GameObject newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
             GeneratePosition();
-            Vector3 position = new Vector3(_xCoor, 530, _zCoor);
+            Vector3 position = new Vector3(_xCoor, 540, _zCoor);
             newObject.transform.position = position;
-
-        }
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
+        
+            // create the twin
+            newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
             GeneratePosition();
-            Vector3 position = new Vector3(_xCoor, 530, _zCoor);
+            GeneratePosition();
+            position = new Vector3(_xCoor, 540, _zCoor);
             newObject.transform.position = position;
 
         }
@@ -58,7 +60,7 @@ public class ObjectController : MonoBehaviour
     void GeneratePosition()
     {
         _xCoor = _random.Next(356, 420);
-        _zCoor = _random.Next(-1100, -1023);
+        _zCoor = _random.Next(-1100, -1040);
     }
      
 }

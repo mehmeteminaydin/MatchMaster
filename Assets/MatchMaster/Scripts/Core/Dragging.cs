@@ -11,7 +11,7 @@ public class Dragging : MonoBehaviour
     public Transform LeftHole;
     public Transform RightHole;
 
-    private int _objectCounter = 10; // I have created 10 twin objects. I want to check if all of them are destroyed.
+    public int ObjectCounter = 20; // I have created 10 twin objects. I want to check if all of them are destroyed.
     private float _dist;
     private bool _dragging = false;
     private bool _isLeft = false;
@@ -138,7 +138,7 @@ public class Dragging : MonoBehaviour
             {
                 Destroy(_toDragObjectLeft);
                 Destroy(_toDragObjectRight);
-                _objectCounter--;
+                ObjectCounter--;
             }
             else{
                 _toDragObjectLeft.GetComponent<Rigidbody>().detectCollisions = true;
@@ -152,7 +152,7 @@ public class Dragging : MonoBehaviour
             _isLeft = false;
             _isRight = false;
         }
-        if (_objectCounter == 0)
+        if (ObjectCounter == 0)
         {
             Debug.Log("You Win!");
         }
