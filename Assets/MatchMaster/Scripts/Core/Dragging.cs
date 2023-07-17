@@ -111,7 +111,9 @@ public class Dragging : MonoBehaviour
 
             float distanceLeft = Vector3.Distance(_toDrag.position, LeftHole.position);
             float distanceRight = Vector3.Distance(_toDrag.position, RightHole.position);
-
+            // debug distanceLeft and distanceRight
+            Debug.Log("Distance Left: " + distanceLeft);
+            Debug.Log("Distance Right: " + distanceRight);
             if (distanceLeft <= 15 && !_isLeft)
             {
                 _toDrag.GetComponent<Rigidbody>().detectCollisions = false;
