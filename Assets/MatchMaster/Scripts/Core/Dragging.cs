@@ -60,6 +60,7 @@ public class Dragging : MonoBehaviour
             _dragging = false;
             return;
         }
+        // comment
 
         Touch touch = Input.touches[0];
         Vector3 pos = touch.position;
