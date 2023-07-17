@@ -60,7 +60,7 @@ public class ObjectController : MonoBehaviour
     void GeneratePosition()
     {
         _xCoor = _random.Next(356, 420);
-        _zCoor = _random.Next(-1100, -1040);
+        _zCoor = _random.Next(-1125, -1040);
     }
      
 }
