@@ -860,9 +860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimerText: {fileID: 47192043}
-  TotalTime: 300
-  LeftHole: {fileID: 0}
-  RightHole: {fileID: 0}
+  TotalTime: 60
   ObjectCounter: 20
   HoleObject: {fileID: 1269460762}
 --- !u!1 &1269460762
@@ -978,8 +976,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.4800005, y: 3.4800007, z: 0.20000008}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.4800007, y: 3.4800007, z: 0.67670476}
+  m_Center: {x: 0, y: 6.899926e-16, z: -0.23835225}
 --- !u!1 &1663944068
 GameObject:
   m_ObjectHideFlags: 0

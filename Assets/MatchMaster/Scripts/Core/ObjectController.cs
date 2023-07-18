@@ -17,21 +17,15 @@ public class ObjectController : MonoBehaviour
     {
         Physics.gravity = Physics.gravity * 9f;
         CreateNumberList();
+        GameObject newObject;
         for (int i = 0; i < Level1ObjectNumber; i++)
         {
-            // create the first object
-            GameObject newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
-            GeneratePosition();
-            Vector3 position = new Vector3(_xCoor, 540, _zCoor);
-            newObject.transform.position = position;
-        
-            // create the twin
-            newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
-            GeneratePosition();
-            GeneratePosition();
-            position = new Vector3(_xCoor, 540, _zCoor);
-            newObject.transform.position = position;
-
+            for(int j = 0; j < 4; j++){
+                newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
+                GeneratePosition();
+                Vector3 position = new Vector3(_xCoor, 540, _zCoor);
+                newObject.transform.position = position;
+            }
         }
     }
 

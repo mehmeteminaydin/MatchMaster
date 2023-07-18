@@ -8,7 +8,7 @@ public class Dragging : MonoBehaviour
     public TMPro.TextMeshProUGUI TimerText;
     public float TotalTime = 300f; // Total time in seconds (5 minutes)
 
-    public int ObjectCounter = 20; // I have created 10 twin objects. I want to check if all of them are destroyed.
+    public int ObjectCounter = 80; // I have created 20 unique x 4 objects . I want to check if all of them are destroyed.
     public GameObject HoleObject;
 
     private float _dist;
@@ -35,6 +35,7 @@ public class Dragging : MonoBehaviour
     private float _zCoor;
 
     private System.Random _random = new System.Random();
+
 
     // Start is called before the first frame update
     void Start()
@@ -117,11 +118,23 @@ public class Dragging : MonoBehaviour
 
             if(_collider.bounds.Intersects(_toDrag.GetComponent<Collider>().bounds))
             {
-                Debug.Log("Inside");
                 // if Object's x position is less than 388 then the left hole is selected
                 if (_toDrag.position.x < 388 && !_isLeft)
                 {
-                    _toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+                    // fine tune dropping position
+                    if(_toDrag.position.x < 376)
+                    {
+                        _toDrag.position = new Vector3(378, _toDrag.position.y, _toDrag.position.z);
+                    }
+                    if(_toDrag.position.z > -1146)
+                    {
+                        _toDrag.position = new Vector3(_toDrag.position.x, _toDrag.position.y, -1148);
+                    }
+                    if(_toDrag.position.z < -1166)
+                    {
+                        _toDrag.position = new Vector3(_toDrag.position.x, _toDrag.position.y, -1164);
+                    }
+                    _toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
                     _toDrag.gameObject.tag = "Untagged";
                     _leftOriginalPosition = _tempLocation;
                     _isLeft = true;
@@ -129,7 +142,20 @@ public class Dragging : MonoBehaviour
                 }
                 else if (_toDrag.position.x >= 388 && !_isRight)
                 {
-                    _toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+                    // fine tune dropping position
+                    if(_toDrag.position.z > -1146)
+                    {
+                        _toDrag.position = new Vector3(_toDrag.position.x, _toDrag.position.y, -1148);
+                    }
+                    if(_toDrag.position.z < -1166)
+                    {
+                        _toDrag.position = new Vector3(_toDrag.position.x, _toDrag.position.y, -1164);
+                    }
+                    if(_toDrag.position.x > 400)
+                    {
+                        _toDrag.position = new Vector3(398, _toDrag.position.y, _toDrag.position.z);
+                    }
+                    _toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
                     _toDrag.gameObject.tag = "Untagged";
                     _rightOriginalPosition = _tempLocation;
                     _isRight = true;
@@ -143,20 +169,10 @@ public class Dragging : MonoBehaviour
             // check the id of the objects if matches then destroy them
             if(_toDragObjectLeft.GetComponent<ObjectID>().id == _toDragObjectRight.GetComponent<ObjectID>().id)
             {
-                Destroy(_toDragObjectLeft);
-                Destroy(_toDragObjectRight);
-                ObjectCounter--;
+                StartCoroutine(WaitForSecondsAndDestroy());
             }
             else{
-
-                _toDragObjectLeft.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                _toDragObjectRight.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                _toDragObjectLeft.gameObject.tag = "cube";
-                _toDragObjectRight.gameObject.tag = "cube";
-                GeneratePosition();
-                _toDragObjectLeft.transform.position = new Vector3(_xCoor, _leftOriginalPosition.y, _zCoor);
-                GeneratePosition();
-                _toDragObjectRight.transform.position = new Vector3(_xCoor, _rightOriginalPosition.y, _zCoor); 
+                StartCoroutine(WaitForSecondsAndThrowObjects());
             }
 
             _isLeft = false;
@@ -172,5 +188,30 @@ public class Dragging : MonoBehaviour
     {
         _xCoor = _random.Next(356, 420);
         _zCoor = _random.Next(-1125, -1040);
+    }
+
+    private IEnumerator WaitForSecondsAndThrowObjects()
+    {
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(0.6f);
+
+        _toDragObjectLeft.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        _toDragObjectRight.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        _toDragObjectLeft.gameObject.tag = "cube";
+        _toDragObjectRight.gameObject.tag = "cube";
+        GeneratePosition();
+        _toDragObjectLeft.transform.position = new Vector3(_xCoor, _leftOriginalPosition.y, _zCoor);
+        GeneratePosition();
+        _toDragObjectRight.transform.position = new Vector3(_xCoor, _rightOriginalPosition.y, _zCoor); 
+    }
+
+    private IEnumerator WaitForSecondsAndDestroy()
+    {
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(0.6f);
+
+        Destroy(_toDragObjectLeft);
+        Destroy(_toDragObjectRight);
+        ObjectCounter = ObjectCounter - 2;
     }
 }
