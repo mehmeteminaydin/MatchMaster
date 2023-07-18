@@ -169,7 +169,9 @@ public class Dragging : MonoBehaviour
             // check the id of the objects if matches then destroy them
             if(_toDragObjectLeft.GetComponent<ObjectID>().id == _toDragObjectRight.GetComponent<ObjectID>().id)
             {
-                StartCoroutine(WaitForSecondsAndDestroy());
+                Destroy(_toDragObjectLeft);
+                Destroy(_toDragObjectRight);
+                ObjectCounter = ObjectCounter - 2;
             }
             else{
                 StartCoroutine(WaitForSecondsAndThrowObjects());
@@ -193,7 +195,7 @@ public class Dragging : MonoBehaviour
     private IEnumerator WaitForSecondsAndThrowObjects()
     {
         // Wait for 2 seconds
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.2f);
 
         _toDragObjectLeft.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         _toDragObjectRight.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -205,13 +207,4 @@ public class Dragging : MonoBehaviour
         _toDragObjectRight.transform.position = new Vector3(_xCoor, _rightOriginalPosition.y, _zCoor); 
     }
 
-    private IEnumerator WaitForSecondsAndDestroy()
-    {
-        // Wait for 2 seconds
-        yield return new WaitForSeconds(0.6f);
-
-        Destroy(_toDragObjectLeft);
-        Destroy(_toDragObjectRight);
-        ObjectCounter = ObjectCounter - 2;
-    }
 }
