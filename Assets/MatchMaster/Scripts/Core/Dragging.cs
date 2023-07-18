@@ -6,7 +6,7 @@ public class Dragging : MonoBehaviour
 {
 
     public TMPro.TextMeshProUGUI TimerText;
-    public float TotalTime = 300f; // Total time in seconds (5 minutes)
+    public float TotalTime = 60f; // Total time in seconds (1 minute)
 
     public int ObjectCounter = 80; // I have created 20 unique x 4 objects . I want to check if all of them are destroyed.
     public GameObject HoleObject;
