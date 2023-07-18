@@ -6,12 +6,11 @@ public class Dragging : MonoBehaviour
 {
 
     public TMPro.TextMeshProUGUI TimerText;
-    public float TotalTime = 300f; // Total time in seconds (5 minutes)
+    public float TotalTime = 60f; // Total time in seconds (1 minute)
 
-    public Transform LeftHole;
-    public Transform RightHole;
+    public int ObjectCounter = 80; // I have created 20 unique x 4 objects . I want to check if all of them are destroyed.
+    public GameObject HoleObject;
 
-    private int _objectCounter = 10; // I have created 10 twin objects. I want to check if all of them are destroyed.
     private float _dist;
     private bool _dragging = false;
     private bool _isLeft = false;
@@ -30,10 +29,18 @@ public class Dragging : MonoBehaviour
     private float _zOffset = 0;
 
     private float _currentTime;
+    private Collider _collider;
+
+    private float _xCoor;
+    private float _zCoor;
+
+    private System.Random _random = new System.Random();
+
 
     // Start is called before the first frame update
     void Start()
     {
+        _collider = HoleObject.GetComponent<Collider>();
         _currentTime = TotalTime;
     }
     // Update is called once per frame
@@ -60,6 +67,7 @@ public class Dragging : MonoBehaviour
             _dragging = false;
             return;
         }
+        // comment
 
         Touch touch = Input.touches[0];
         Vector3 pos = touch.position;
@@ -108,26 +116,51 @@ public class Dragging : MonoBehaviour
         {
             _dragging = false;
 
-            float distanceLeft = Vector3.Distance(_toDrag.position, LeftHole.position);
-            float distanceRight = Vector3.Distance(_toDrag.position, RightHole.position);
-
-            if (distanceLeft <= 15 && !_isLeft)
+            if(_collider.bounds.Intersects(_toDrag.GetComponent<Collider>().bounds))
             {
-                _toDrag.GetComponent<Rigidbody>().detectCollisions = false;
-                _toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                _toDrag.position = new Vector3(LeftHole.position.x, LeftHole.position.y , LeftHole.position.z);
-                _leftOriginalPosition = _tempLocation;
-                _isLeft = true;
-                _toDragObjectLeft = _toDrag.gameObject;
-            }
-            else if (distanceRight <= 15 && !_isRight)
-            {
-                _toDrag.GetComponent<Rigidbody>().detectCollisions = false;
-                _toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                _toDrag.position = new Vector3(RightHole.position.x, RightHole.position.y, RightHole.position.z);
-                _rightOriginalPosition = _tempLocation;
-                _isRight = true;
-                _toDragObjectRight = _toDrag.gameObject;
+                // if Object's x position is less than 388 then the left hole is selected
+                if (_toDrag.position.x < 388 && !_isLeft)
+                {
+                    // fine tune dropping position
+                    if(_toDrag.position.x < 376)
+                    {
+                        _toDrag.position = new Vector3(378, _toDrag.position.y, _toDrag.position.z);
+                    }
+                    if(_toDrag.position.z > -1146)
+                    {
+                        _toDrag.position = new Vector3(_toDrag.position.x, _toDrag.position.y, -1148);
+                    }
+                    if(_toDrag.position.z < -1166)
+                    {
+                        _toDrag.position = new Vector3(_toDrag.position.x, _toDrag.position.y, -1164);
+                    }
+                    _toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+                    _toDrag.gameObject.tag = "Untagged";
+                    _leftOriginalPosition = _tempLocation;
+                    _isLeft = true;
+                    _toDragObjectLeft = _toDrag.gameObject;
+                }
+                else if (_toDrag.position.x >= 388 && !_isRight)
+                {
+                    // fine tune dropping position
+                    if(_toDrag.position.z > -1146)
+                    {
+                        _toDrag.position = new Vector3(_toDrag.position.x, _toDrag.position.y, -1148);
+                    }
+                    if(_toDrag.position.z < -1166)
+                    {
+                        _toDrag.position = new Vector3(_toDrag.position.x, _toDrag.position.y, -1164);
+                    }
+                    if(_toDrag.position.x > 400)
+                    {
+                        _toDrag.position = new Vector3(398, _toDrag.position.y, _toDrag.position.z);
+                    }
+                    _toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+                    _toDrag.gameObject.tag = "Untagged";
+                    _rightOriginalPosition = _tempLocation;
+                    _isRight = true;
+                    _toDragObjectRight = _toDrag.gameObject;
+                }
             }
         }
 
@@ -138,23 +171,40 @@ public class Dragging : MonoBehaviour
             {
                 Destroy(_toDragObjectLeft);
                 Destroy(_toDragObjectRight);
-                _objectCounter--;
+                ObjectCounter = ObjectCounter - 2;
             }
             else{
-                _toDragObjectLeft.GetComponent<Rigidbody>().detectCollisions = true;
-                _toDragObjectLeft.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                _toDragObjectRight.GetComponent<Rigidbody>().detectCollisions = true;
-                _toDragObjectRight.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                _toDragObjectLeft.transform.position = new Vector3(_leftOriginalPosition.x, _leftOriginalPosition.y, _leftOriginalPosition.z);
-                _toDragObjectRight.transform.position = new Vector3(_rightOriginalPosition.x, _rightOriginalPosition.y, _rightOriginalPosition.z); 
+                StartCoroutine(WaitForSecondsAndThrowObjects());
             }
 
             _isLeft = false;
             _isRight = false;
         }
-        if (_objectCounter == 0)
+        if (ObjectCounter == 0)
         {
             Debug.Log("You Win!");
         }
     }
+
+    void GeneratePosition()
+    {
+        _xCoor = _random.Next(356, 420);
+        _zCoor = _random.Next(-1125, -1040);
+    }
+
+    private IEnumerator WaitForSecondsAndThrowObjects()
+    {
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(0.2f);
+
+        _toDragObjectLeft.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        _toDragObjectRight.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        _toDragObjectLeft.gameObject.tag = "cube";
+        _toDragObjectRight.gameObject.tag = "cube";
+        GeneratePosition();
+        _toDragObjectLeft.transform.position = new Vector3(_xCoor, _leftOriginalPosition.y, _zCoor);
+        GeneratePosition();
+        _toDragObjectRight.transform.position = new Vector3(_xCoor, _rightOriginalPosition.y, _zCoor); 
+    }
+
 }

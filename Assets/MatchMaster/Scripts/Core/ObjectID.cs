@@ -9,6 +9,7 @@ public class ObjectID : MonoBehaviour
     public int id;
 
     // the up left corner is = (x = 356, z = -1023), the bottom right corner is = (x = 420, z = -1170)
+    // object does not cross the plane which is at y = 526
 
     void Update()
     {
@@ -27,6 +28,10 @@ public class ObjectID : MonoBehaviour
         if (transform.position.z > -1023)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -1023);
+        }
+        if (transform.position.y < 532)
+        {
+            transform.position = new Vector3(transform.position.x, 532, transform.position.z);
         }
     }
 }
