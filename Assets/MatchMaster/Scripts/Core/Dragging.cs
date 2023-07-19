@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Dragging : MonoBehaviour
 {
-
+    public ObjectController ObjectController;
     public TMPro.TextMeshProUGUI TimerText;
     public float TotalTime = 60f; // Total time in seconds (1 minute)
 
-    public int ObjectCounter = 80; // I have created 20 unique x 4 objects . I want to check if all of them are destroyed.
+    public int ObjectCounter = 40; // I have created 10 unique x 4 objects . I want to check if all of them are destroyed.
     public GameObject HoleObject;
 
     private float _dist;
@@ -59,6 +59,10 @@ public class Dragging : MonoBehaviour
         if (_currentTime <= 0)
         {
             Debug.Log("You Lose!");
+        }
+        if (ObjectCounter == 0)
+        {
+            Debug.Log("You Win!");
         }
 
         Vector3 v3;
@@ -170,7 +174,9 @@ public class Dragging : MonoBehaviour
             if(_toDragObjectLeft.GetComponent<ObjectID>().id == _toDragObjectRight.GetComponent<ObjectID>().id)
             {
                 Destroy(_toDragObjectLeft);
+                OnObjectDestroyed(_toDragObjectLeft); // ObjectController'a haber veriyoruz
                 Destroy(_toDragObjectRight);
+                OnObjectDestroyed(_toDragObjectRight);
                 ObjectCounter = ObjectCounter - 2;
             }
             else{
@@ -180,10 +186,7 @@ public class Dragging : MonoBehaviour
             _isLeft = false;
             _isRight = false;
         }
-        if (ObjectCounter == 0)
-        {
-            Debug.Log("You Win!");
-        }
+        
     }
 
     void GeneratePosition()
@@ -206,5 +209,11 @@ public class Dragging : MonoBehaviour
         GeneratePosition();
         _toDragObjectRight.transform.position = new Vector3(_xCoor, _rightOriginalPosition.y, _zCoor); 
     }
+    
+    void OnObjectDestroyed(GameObject gameObject)
+    {
+        ObjectController.MarkObjectDestroyed(gameObject);
+    }
+    
 
 }
