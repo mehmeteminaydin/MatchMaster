@@ -29,8 +29,8 @@ public class ObjectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _leftHolePosition = new Vector3(380, 536, -1152);
-        _rightHolePosition = new Vector3(394, 536, -1152);
+        _leftHolePosition = new Vector3(380, 542, -1152);
+        _rightHolePosition = new Vector3(394, 542, -1152);
 
         // it shows the remaining hint count on the screen
         HintText.text =  HintCounter.ToString();
@@ -52,24 +52,7 @@ public class ObjectController : MonoBehaviour
         }
     }
 
-    void Update(){
-
-        //during the magnet, the objects should not be draggable
-        if(_isMagnetActive){
-            for(int i = 0; i < _instantiatedObjects.Count; i++){
-                if(_instantiatedObjects[i] != null){
-                    _instantiatedObjects[i].gameObject.tag = "Untagged";
-                }
-            }
-        }
-        else{
-            for(int i = 0; i < _instantiatedObjects.Count; i++){
-                if(_instantiatedObjects[i] != null){
-                    _instantiatedObjects[i].gameObject.tag = "cube";
-                }
-            }
-        }
-    }
+    
 
     void CreateNumberList()
     {
@@ -168,16 +151,16 @@ public class ObjectController : MonoBehaviour
         Color originalColor2 = _instantiatedObjects[index2].GetComponent<Renderer>().material.color;
         Color blinkColor = Color.white;
         
-        // increase shake level
-        _instantiatedObjects[index1].transform.DOShakePosition(0.5f, 0.5f, 10, 90, false, true);
-        _instantiatedObjects[index2].transform.DOShakePosition(0.5f, 0.5f, 10, 90, false, true);
+
+        _instantiatedObjects[index1].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
+        _instantiatedObjects[index2].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
 
         for (int i = 0; i < blinkCount; i++)
         {
             // Set the colors to the blink color
             SetMaterialColor(index1, blinkColor);
             SetMaterialColor(index2, blinkColor);
-
+            
             // Wait for the blink duration
             yield return new WaitForSeconds(blinkDuration);
 
@@ -187,6 +170,7 @@ public class ObjectController : MonoBehaviour
 
             // Wait for the blink duration
             yield return new WaitForSeconds(blinkDuration);
+
         }
         _isHintActive = false;
     }
@@ -203,7 +187,7 @@ public class ObjectController : MonoBehaviour
             _isHintActive = true;
         }
         else{
-            _isMagnetActive = true;
+            _isMagnetActive = true; 
         }
 
         List<int> validIndices = new List<int>();
@@ -228,16 +212,21 @@ public class ObjectController : MonoBehaviour
         _instantiatedObjects[_instantiatedObjects.IndexOf(destroyedObject)] = null;
         
     }
-
     public void OnMagnetButtonPress()
     {
         if(_isHintActive){
             return;
         }
+        ChangeTagToUntagged();
+        OnMagnetButtonPressHelper();
+    }
+    public void OnMagnetButtonPressHelper()
+    {
         if(_isMagnetActive){
             return;
         }
         if(MagnetCounter == 0){
+            ChangeTagToCube();
             return;
         }
         if(GetSizeOfList(_instantiatedObjects) == 0){
@@ -251,6 +240,7 @@ public class ObjectController : MonoBehaviour
                 return;
             }
         }
+        Dragging.ClearHole();
         _isMagnetActive = true;
 
         // Select a random index for the twin type
@@ -267,19 +257,12 @@ public class ObjectController : MonoBehaviour
         }
         if(nullFlag){
             _isMagnetActive = false;
-            OnMagnetButtonPress();
+            OnMagnetButtonPressHelper();
             return;
         }
         // Find the valid twin objects within the same type "false" indicates it is magnet
         List<int> validIndices = FindValidTwinIndices(startIndex, false);
 
-        // Check if there are any valid twin objects
-        if (validIndices.Count < 2)
-        {
-            // Handle the case when there are not enough valid twin objects
-            Debug.Log("Not enough valid twin objects.");
-            OnMagnetButtonPress();
-        }
 
         // Select two random valid indices from the list
         int randomIndex1 = validIndices[_random.Next(0, validIndices.Count)];
@@ -310,12 +293,13 @@ public class ObjectController : MonoBehaviour
         Dragging.DecreaseObjectCounter();
         _magnetRepeat--;
         if(_magnetRepeat > 0){
-            OnMagnetButtonPress();
+            OnMagnetButtonPressHelper();
         }
         else{
             _magnetRepeat = 3;
             MagnetCounter--;
             MagnetText.text =  MagnetCounter.ToString();
+            ChangeTagToCube();
         }
     }
 
@@ -327,6 +311,22 @@ public class ObjectController : MonoBehaviour
             }
         }
         return count;
+    }
+
+    private void ChangeTagToCube(){
+        for(int i = 0; i < _instantiatedObjects.Count; i++){
+            if(_instantiatedObjects[i] != null){
+                _instantiatedObjects[i].gameObject.tag = "cube";
+            }
+        }
+    }
+
+    private void ChangeTagToUntagged(){
+        for(int i = 0; i < _instantiatedObjects.Count; i++){
+            if(_instantiatedObjects[i] != null){
+                _instantiatedObjects[i].gameObject.tag = "Untagged";
+            }
+        }
     }
     
 }

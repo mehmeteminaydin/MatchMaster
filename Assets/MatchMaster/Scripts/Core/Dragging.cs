@@ -42,6 +42,12 @@ public class Dragging : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_isLeft){
+            _toDragObjectLeft.gameObject.tag = "Untagged";
+        }
+        if(_isRight){
+            _toDragObjectRight.gameObject.tag = "Untagged";
+        }
 
         if (ObjectCounter == 0)
         {
@@ -201,6 +207,28 @@ public class Dragging : MonoBehaviour
     public void DecreaseObjectCounter()
     {
         ObjectCounter = ObjectCounter - 2;
+    }
+
+    public void ClearHole()
+    {
+        if(_isLeft){
+            _toDragObjectLeft.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            _toDragObjectLeft.gameObject.tag = "cube";
+            GeneratePosition();
+            _toDragObjectLeft.transform.position = new Vector3(_xCoor, _leftOriginalPosition.y, _zCoor);
+            _toDragObjectLeft = null;
+            _isLeft = false;
+        }
+        if(_isRight){
+            _toDragObjectRight.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            _toDragObjectRight.gameObject.tag = "cube";
+            GeneratePosition();
+            _toDragObjectRight.transform.position = new Vector3(_xCoor, _rightOriginalPosition.y, _zCoor); 
+            _toDragObjectRight = null;
+            _isRight = false;
+        }
+        
+
     }
 
 }
