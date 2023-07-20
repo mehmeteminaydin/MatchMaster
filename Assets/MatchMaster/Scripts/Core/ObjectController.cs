@@ -29,8 +29,8 @@ public class ObjectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _leftHolePosition = new Vector3(380, 536, -1152);
-        _rightHolePosition = new Vector3(394, 536, -1152);
+        _leftHolePosition = new Vector3(380, 542, -1152);
+        _rightHolePosition = new Vector3(394, 542, -1152);
 
         // it shows the remaining hint count on the screen
         HintText.text =  HintCounter.ToString();
@@ -151,22 +151,19 @@ public class ObjectController : MonoBehaviour
         Color originalColor2 = _instantiatedObjects[index2].GetComponent<Renderer>().material.color;
         Color blinkColor = Color.white;
         
-        // increase shake level
-        //_instantiatedObjects[index1].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
-        //_instantiatedObjects[index2].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
+
+        _instantiatedObjects[index1].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
+        _instantiatedObjects[index2].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
 
         for (int i = 0; i < blinkCount; i++)
         {
             // Set the colors to the blink color
             SetMaterialColor(index1, blinkColor);
             SetMaterialColor(index2, blinkColor);
-            _instantiatedObjects[index1].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
-            _instantiatedObjects[index2].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
+            
             // Wait for the blink duration
             yield return new WaitForSeconds(blinkDuration);
-            
-            _instantiatedObjects[index1].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
-            _instantiatedObjects[index2].transform.DOShakePosition(0.5f, 0.5f, 50, 50, false, true);
+
             // Set the colors back to the original colors
             SetMaterialColor(index1, originalColor1);
             SetMaterialColor(index2, originalColor2);
@@ -190,7 +187,7 @@ public class ObjectController : MonoBehaviour
             _isHintActive = true;
         }
         else{
-            _isMagnetActive = true;
+            _isMagnetActive = true; 
         }
 
         List<int> validIndices = new List<int>();
@@ -215,15 +212,16 @@ public class ObjectController : MonoBehaviour
         _instantiatedObjects[_instantiatedObjects.IndexOf(destroyedObject)] = null;
         
     }
-    public void OnMagnetButtonPress(){
+    public void OnMagnetButtonPress()
+    {
+        if(_isHintActive){
+            return;
+        }
         ChangeTagToUntagged();
         OnMagnetButtonPressHelper();
     }
     public void OnMagnetButtonPressHelper()
     {
-        if(_isHintActive){
-            return;
-        }
         if(_isMagnetActive){
             return;
         }
@@ -242,6 +240,7 @@ public class ObjectController : MonoBehaviour
                 return;
             }
         }
+        Dragging.ClearHole();
         _isMagnetActive = true;
 
         // Select a random index for the twin type

@@ -29,9 +29,9 @@ public class ObjectID : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -1023);
         }
-        if (transform.position.y < 532)
+        if (transform.position.y < 531)
         {
-            transform.position = new Vector3(transform.position.x, 532, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 540, transform.position.z);
         }
     }
 }
