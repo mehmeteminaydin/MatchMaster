@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using SNG.Save;
 
 
 public class ObjectController : MonoBehaviour
@@ -30,14 +29,7 @@ public class ObjectController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        SaveGame.Instance.PlayerData.Star++; 
-        long starCount = SaveGame.Instance.PlayerData.Star;
-        Debug.Log("Star Count: " + starCount);
-
-
-
-        
+    {   
 
         _leftHolePosition = new Vector3(380, 542, -1152);
         _rightHolePosition = new Vector3(394, 542, -1152);
