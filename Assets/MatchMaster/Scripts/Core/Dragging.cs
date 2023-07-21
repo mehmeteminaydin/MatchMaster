@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Dragging : MonoBehaviour
 {
+    public UIController UIController;
     public ObjectController ObjectController;
 
     public int ObjectCounter = 40; // I have created 10 unique x 4 objects . I want to check if all of them are destroyed.
     public GameObject HoleObject;
 
     private float _dist;
+    private bool _isGameOver = false;
     private bool _dragging = false;
     private bool _isLeft = false;
     private bool _isRight = false;
@@ -42,6 +44,9 @@ public class Dragging : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_isGameOver){
+            return;
+        }
         if(_isLeft){
             _toDragObjectLeft.gameObject.tag = "Untagged";
         }
@@ -51,7 +56,9 @@ public class Dragging : MonoBehaviour
 
         if (ObjectCounter == 0)
         {
-            Debug.Log("You Win!");
+            _isGameOver = true;
+            UIController.GameOverWon();
+            return;
         }
 
         Vector3 v3;
@@ -60,7 +67,6 @@ public class Dragging : MonoBehaviour
             _dragging = false;
             return;
         }
-        // comment
 
         Touch touch = Input.touches[0];
         Vector3 pos = touch.position;
@@ -229,6 +235,11 @@ public class Dragging : MonoBehaviour
         }
         
 
+    }
+
+    public void GameOver()
+    {
+        _isGameOver = true;
     }
 
 }

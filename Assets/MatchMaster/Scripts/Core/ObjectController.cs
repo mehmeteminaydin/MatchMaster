@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using SNG.Save;
+
 
 public class ObjectController : MonoBehaviour
 {
@@ -10,8 +12,6 @@ public class ObjectController : MonoBehaviour
     public int[] ObjectNumberList;
     public List<GameObject> ObjectList;
     public int Level1ObjectNumber = 2;
-    public int HintCounter = 3;
-    public int MagnetCounter = 3;
     // I will edit the textmesh pro on Ui
     public TMPro.TextMeshProUGUI HintText;
     public TMPro.TextMeshProUGUI MagnetText;
@@ -28,13 +28,16 @@ public class ObjectController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        SaveGame.Instance.PlayerData.HintCounter = 3;
+        SaveGame.Instance.PlayerData.MagnetCounter = 3;
+        
         _leftHolePosition = new Vector3(380, 542, -1152);
         _rightHolePosition = new Vector3(394, 542, -1152);
 
         // it shows the remaining hint count on the screen
-        HintText.text =  HintCounter.ToString();
-        MagnetText.text =  MagnetCounter.ToString();
+        HintText.text =  SaveGame.Instance.PlayerData.HintCounter.ToString();
+        MagnetText.text =  SaveGame.Instance.PlayerData.MagnetCounter.ToString();
 
 
         Physics.gravity = Physics.gravity * 9f;
@@ -90,7 +93,7 @@ public class ObjectController : MonoBehaviour
         if(_isHintActive){
             return;
         }
-        if(HintCounter == 0){
+        if(SaveGame.Instance.PlayerData.HintCounter == 0){
             return;
         }
         if(GetSizeOfList(_instantiatedObjects) < 2){
@@ -133,8 +136,9 @@ public class ObjectController : MonoBehaviour
         int randomIndex2 = validIndices[_random.Next(0, validIndices.Count)];
         // Start the coroutine to initiate blinking for the selected twin objects
         StartCoroutine(BlinkObjects(randomIndex1, randomIndex2));
-        HintCounter--;
-        HintText.text =  HintCounter.ToString();
+        SaveGame.Instance.PlayerData.HintCounter--;
+
+        HintText.text =  SaveGame.Instance.PlayerData.HintCounter.ToString();
     }
 
     IEnumerator BlinkObjects(int index1, int index2)
@@ -157,19 +161,27 @@ public class ObjectController : MonoBehaviour
 
         for (int i = 0; i < blinkCount; i++)
         {
-            // Set the colors to the blink color
-            SetMaterialColor(index1, blinkColor);
-            SetMaterialColor(index2, blinkColor);
+            if (_instantiatedObjects[index1] != null && _instantiatedObjects[index2] != null){
+                // Set the colors to the blink color
+                SetMaterialColor(index1, blinkColor);
+                SetMaterialColor(index2, blinkColor);
+
+                // Wait for the blink duration
+                yield return new WaitForSeconds(blinkDuration);
+                if(_instantiatedObjects[index1] != null || _instantiatedObjects[index2] != null){
+                    if(_instantiatedObjects[index1] != null){
+                        SetMaterialColor(index1, originalColor1);
+                    }
+                    if(_instantiatedObjects[index2] != null){
+                        SetMaterialColor(index2, originalColor2);
+                    }
+
+                    // Wait for the blink duration
+                    yield return new WaitForSeconds(blinkDuration);
+                }
+                
+            }
             
-            // Wait for the blink duration
-            yield return new WaitForSeconds(blinkDuration);
-
-            // Set the colors back to the original colors
-            SetMaterialColor(index1, originalColor1);
-            SetMaterialColor(index2, originalColor2);
-
-            // Wait for the blink duration
-            yield return new WaitForSeconds(blinkDuration);
 
         }
         _isHintActive = false;
@@ -225,15 +237,15 @@ public class ObjectController : MonoBehaviour
         if(_isMagnetActive){
             return;
         }
-        if(MagnetCounter == 0){
+        if(SaveGame.Instance.PlayerData.MagnetCounter == 0){
             ChangeTagToCube();
             return;
         }
         if(GetSizeOfList(_instantiatedObjects) == 0){
             if(_magnetRepeat == 1 || _magnetRepeat == 2){
                 _magnetRepeat = 3;
-                MagnetCounter--;
-                MagnetText.text =  MagnetCounter.ToString();
+                SaveGame.Instance.PlayerData.MagnetCounter--;
+                MagnetText.text =  SaveGame.Instance.PlayerData.MagnetCounter.ToString();
                 return;
             }
             else{
@@ -297,8 +309,8 @@ public class ObjectController : MonoBehaviour
         }
         else{
             _magnetRepeat = 3;
-            MagnetCounter--;
-            MagnetText.text =  MagnetCounter.ToString();
+            SaveGame.Instance.PlayerData.MagnetCounter--;
+            MagnetText.text =  SaveGame.Instance.PlayerData.MagnetCounter.ToString();
             ChangeTagToCube();
         }
     }
