@@ -71,7 +71,7 @@ public class UIController : MonoBehaviour
         else
         {
             float remainingRatio = _currentTime / TotalTime;
-            TimeBarImage.transform.localScale = new Vector3(remainingRatio, 1f, 1f);
+            TimeBarImage.fillAmount = remainingRatio; // Set the fill amount of the green bar
             TimeBarImage.enabled = true; // Make the green bar visible
         }
 
