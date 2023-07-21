@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using SNG.Save;
+
 
 public class ObjectController : MonoBehaviour
 {
@@ -29,6 +31,14 @@ public class ObjectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SaveGame.Instance.PlayerData.Star++; 
+        long starCount = SaveGame.Instance.PlayerData.Star;
+        Debug.Log("Star Count: " + starCount);
+
+
+
+        
+
         _leftHolePosition = new Vector3(380, 542, -1152);
         _rightHolePosition = new Vector3(394, 542, -1152);
 
@@ -157,19 +167,27 @@ public class ObjectController : MonoBehaviour
 
         for (int i = 0; i < blinkCount; i++)
         {
-            // Set the colors to the blink color
-            SetMaterialColor(index1, blinkColor);
-            SetMaterialColor(index2, blinkColor);
+            if (_instantiatedObjects[index1] != null && _instantiatedObjects[index2] != null){
+                // Set the colors to the blink color
+                SetMaterialColor(index1, blinkColor);
+                SetMaterialColor(index2, blinkColor);
+
+                // Wait for the blink duration
+                yield return new WaitForSeconds(blinkDuration);
+                if(_instantiatedObjects[index1] != null || _instantiatedObjects[index2] != null){
+                    if(_instantiatedObjects[index1] != null){
+                        SetMaterialColor(index1, originalColor1);
+                    }
+                    if(_instantiatedObjects[index2] != null){
+                        SetMaterialColor(index2, originalColor2);
+                    }
+
+                    // Wait for the blink duration
+                    yield return new WaitForSeconds(blinkDuration);
+                }
+                
+            }
             
-            // Wait for the blink duration
-            yield return new WaitForSeconds(blinkDuration);
-
-            // Set the colors back to the original colors
-            SetMaterialColor(index1, originalColor1);
-            SetMaterialColor(index2, originalColor2);
-
-            // Wait for the blink duration
-            yield return new WaitForSeconds(blinkDuration);
 
         }
         _isHintActive = false;
