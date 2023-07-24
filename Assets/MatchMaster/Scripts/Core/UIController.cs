@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public GameObject GameEndScreen;
+    public Image GameEndWin;
+    public Image GameEndLose;
     public ObjectController ObjectController;
     public Dragging Dragging;
     public Image TimeBarImage;
@@ -67,6 +70,7 @@ public class UIController : MonoBehaviour
             _isTimeOver = true;
             TimeBarImage.enabled = false; // Hide the green bar
             GameOverLost();
+            return;
         }
         else
         {
@@ -109,7 +113,9 @@ public class UIController : MonoBehaviour
         SaveStar();
         Debug.Log(" _starCount: " + _starCount + "You won!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.Star);
 
-        // change the scene here. 
+        GameEndScreen.SetActive(true);
+        GameEndWin.enabled = true;
+        GameEndLose.enabled = false;
     }
 
     public void GameOverLost()
@@ -117,6 +123,9 @@ public class UIController : MonoBehaviour
         _isGameOver = true;
         Debug.Log(" _starCount: " + _starCount + "You lost!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.Star);
         Dragging.GameOver();
-        // change the scene here. 
+        
+        GameEndScreen.SetActive(true);
+        GameEndWin.enabled = false;
+        GameEndLose.enabled = true;
     }
 }
