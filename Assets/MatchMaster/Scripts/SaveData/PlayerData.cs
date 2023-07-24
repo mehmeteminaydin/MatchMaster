@@ -4,13 +4,13 @@ namespace SNG.Save
     public class PlayerData
     {
 
-        public long Star;
+        public long TotalStar;
         public long HintCounter;
         public long MagnetCounter;
 
         public PlayerData()
         {
-            Star = 0;
+            TotalStar = 0;
             HintCounter = 3;
             MagnetCounter = 3;
         }

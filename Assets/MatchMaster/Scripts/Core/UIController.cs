@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
     public Image TimeBarImage;
     public Image TimeBarBGImage;
     public List<Image> StarImages;
-    public List<Image> StarBGImages;
+    public List<Image> GameEndStarImages;
     public TMPro.TextMeshProUGUI TotalStarCount;
     public TMPro.TextMeshProUGUI TimerText;
 
@@ -30,7 +30,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TotalStarCount.text = SaveGame.Instance.PlayerData.Star.ToString();
+        TotalStarCount.text = SaveGame.Instance.PlayerData.TotalStar.ToString();
         _currentTime = TotalTime;
     }
 
@@ -103,17 +103,20 @@ public class UIController : MonoBehaviour
 
     private void SaveStar()
     {
-        SaveGame.Instance.PlayerData.Star += _starCount;
-        TotalStarCount.text = SaveGame.Instance.PlayerData.Star.ToString();
+        SaveGame.Instance.PlayerData.TotalStar += _starCount;
+        TotalStarCount.text = SaveGame.Instance.PlayerData.TotalStar.ToString();
     }
 
     public void GameOverWon()
     {
         _isGameOver = true;
         SaveStar();
-        Debug.Log(" _starCount: " + _starCount + "You won!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.Star);
-
+        Debug.Log(" _starCount: " + _starCount + "You won!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
         GameEndScreen.SetActive(true);
+        for (int i = 0; i < GameEndStarImages.Count; i++)
+        {
+            GameEndStarImages[i].enabled = (i < _starCount); // Enable the star image if its index is less than _starCount
+        }
         GameEndWin.enabled = true;
         GameEndLose.enabled = false;
     }
@@ -121,10 +124,15 @@ public class UIController : MonoBehaviour
     public void GameOverLost()
     {
         _isGameOver = true;
-        Debug.Log(" _starCount: " + _starCount + "You lost!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.Star);
+        Debug.Log(" _starCount: " + _starCount + "You lost!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
+
         Dragging.GameOver();
         
         GameEndScreen.SetActive(true);
+        for (int i = 0; i < GameEndStarImages.Count; i++)
+        {
+            GameEndStarImages[i].enabled = (i < _starCount); // Enable the star image if its index is less than _starCount
+        }
         GameEndWin.enabled = false;
         GameEndLose.enabled = true;
     }
