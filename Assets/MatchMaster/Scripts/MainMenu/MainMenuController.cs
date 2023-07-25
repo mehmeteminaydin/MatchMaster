@@ -49,7 +49,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator ChangeShopPanelBackground()
     {
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(1f);
         ShopPanelBackground.DOColor(new Color(_shopPanelColor.r, _shopPanelColor.g, _shopPanelColor.b, 0.8f), 0.2f);
         // wait until the animation is finished
         yield return new WaitForSeconds(0.2f);
@@ -91,7 +91,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator ChangeSettingsPanelBackground()
     {
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(1f);
         SettingsPanelBackground.DOColor(new Color(_settingsPanelColor.r, _settingsPanelColor.g, _settingsPanelColor.b, 0.8f), 0.2f);
         // wait until the animation is finished
         yield return new WaitForSeconds(0.2f);
