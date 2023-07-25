@@ -27,6 +27,6 @@ public class GameEndController : MonoBehaviour
         // Hide the game end screen
         this.gameObject.SetActive(false);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
     }
 }

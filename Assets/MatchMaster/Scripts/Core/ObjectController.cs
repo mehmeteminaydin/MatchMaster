@@ -29,8 +29,8 @@ public class ObjectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
-        SaveGame.Instance.PlayerData.HintCounter = 3;
-        SaveGame.Instance.PlayerData.MagnetCounter = 3;
+        SaveGame.Instance.PlayerData.HintCounter = 9;
+        SaveGame.Instance.PlayerData.MagnetCounter = 9;
         
         _leftHolePosition = new Vector3(380, 542, -1152);
         _rightHolePosition = new Vector3(394, 542, -1152);
@@ -39,8 +39,6 @@ public class ObjectController : MonoBehaviour
         HintText.text =  SaveGame.Instance.PlayerData.HintCounter.ToString();
         MagnetText.text =  SaveGame.Instance.PlayerData.MagnetCounter.ToString();
 
-
-        Physics.gravity = Physics.gravity * 9f;
         CreateNumberList();
         
         for (int i = 0; i < Level1ObjectNumber; i++)
