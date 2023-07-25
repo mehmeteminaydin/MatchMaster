@@ -1329,6 +1329,7 @@ GameObject:
   - component: {fileID: 649098589}
   - component: {fileID: 649098588}
   - component: {fileID: 649098590}
+  - component: {fileID: 649098591}
   m_Layer: 5
   m_Name: SettingsPopup
   m_TagString: Untagged
@@ -1417,6 +1418,18 @@ MonoBehaviour:
   ButtonCircleImage: {fileID: 1489345690}
   LeftSight: {fileID: 1056819100}
   RightSight: {fileID: 1845999664}
+--- !u!225 &649098591
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649098586}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &799527818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,7 +1516,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1900202625}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: OnSettingsButtonClicked
+        m_MethodName: SettingsPanelFadeIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2163,7 +2176,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1900202625}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: OnSettingsPanelExit
+        m_MethodName: SettingsPanelFadeOut
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2411,7 +2424,7 @@ GameObject:
   - component: {fileID: 1192054503}
   - component: {fileID: 1192054506}
   - component: {fileID: 1192054505}
-  - component: {fileID: 1192054504}
+  - component: {fileID: 1192054507}
   m_Layer: 5
   m_Name: ShopPopup
   m_TagString: Untagged
@@ -2444,24 +2457,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1192054504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1192054502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7caff90672f09440a9ea825c12177d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SoundButton: {fileID: 0}
-  TurnedOff: {fileID: 21300000, guid: f58d5b55939494b2fa2eec9cc9b1d163, type: 3}
-  TurnedOn: {fileID: 21300000, guid: 927434bd258094334b3c546766f85f10, type: 3}
-  ButtonCircleImage: {fileID: 0}
-  LeftSight: {fileID: 0}
-  RightSight: {fileID: 0}
 --- !u!114 &1192054505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2475,7 +2470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.7372549}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.7529412}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2500,6 +2495,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192054502}
   m_CullTransparentMesh: 1
+--- !u!225 &1192054507
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192054502}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1217284891
 GameObject:
   m_ObjectHideFlags: 0
@@ -3765,7 +3772,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1900202625}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: OnShopPanelExit
+        m_MethodName: ShopPanelFadeOut
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3844,6 +3851,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SettingsPanel: {fileID: 649098586}
   ShopPanel: {fileID: 1192054502}
+  FadeTime: 1
+  ShopCanvasGroup: {fileID: 1192054507}
+  ShopRectTransform: {fileID: 1192054503}
+  SettingsCanvasGroup: {fileID: 649098591}
+  SettingsRectTransform: {fileID: 649098587}
+  ShopPanelBackground: {fileID: 1192054505}
+  SettingsPanelBackground: {fileID: 649098588}
 --- !u!4 &1900202626
 Transform:
   m_ObjectHideFlags: 0
@@ -4020,7 +4034,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1900202625}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: OnShopButtonClicked
+        m_MethodName: ShopPanelFadeIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
