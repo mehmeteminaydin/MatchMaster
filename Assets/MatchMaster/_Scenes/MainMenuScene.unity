@@ -3858,6 +3858,10 @@ MonoBehaviour:
   SettingsRectTransform: {fileID: 649098587}
   ShopPanelBackground: {fileID: 1192054505}
   SettingsPanelBackground: {fileID: 649098588}
+  SettingsButton: {fileID: 799527820}
+  ShopButton: {fileID: 1978896982}
+  SettingsExitButton: {fileID: 1123014427}
+  ShopExitButton: {fileID: 1891224921}
 --- !u!4 &1900202626
 Transform:
   m_ObjectHideFlags: 0
