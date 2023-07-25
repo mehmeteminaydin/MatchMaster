@@ -41,27 +41,34 @@ public class MainMenuController : MonoBehaviour
         ShopRectTransform.transform.localPosition = new Vector3(0f, -2000f, 0f);
         ShopRectTransform.DOAnchorPos(new Vector2(0f, 0f), FadeTime, false).SetEase(Ease.InOutSine);
         ShopCanvasGroup.DOFade(1, FadeTime);
-        ShopPanelBackground.DOColor(new Color(_shopPanelColor.r, _shopPanelColor.g, _shopPanelColor.b, 0.8f), 1.5f);
-        
+        StartCoroutine(ChangeShopPanelBackground());        
+    }
+
+    IEnumerator ChangeShopPanelBackground()
+    {
+        yield return new WaitForSeconds(0.8f);
+        ShopPanelBackground.DOColor(new Color(_shopPanelColor.r, _shopPanelColor.g, _shopPanelColor.b, 0.8f), 0.2f);
     }
 
     public void ShopPanelFadeOut()
     {
-        ShopPanelBackground.DOColor(new Color(_shopPanelColor.r, _shopPanelColor.g, _shopPanelColor.b, 0f), 1f);
-        ShopCanvasGroup.alpha = 1f;
-        ShopRectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
-        ShopRectTransform.DOAnchorPos(new Vector2(0f, -2000), FadeTime, false).SetEase(Ease.InOutSine);
-        ShopCanvasGroup.DOFade(1, FadeTime);
-        // wait for the animation to finish
-        StartCoroutine(DisableShopPanel());
+        ShopPanelBackground.color = new Color(_shopPanelColor.r, _shopPanelColor.g, _shopPanelColor.b, 0f);
+
+        StartCoroutine(AnimateShopPanelFadeOut());
 
     }
 
-    IEnumerator DisableShopPanel()
+    IEnumerator AnimateShopPanelFadeOut()
     {
+        ShopCanvasGroup.alpha = 1f;
+        ShopRectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
+        ShopRectTransform.DOAnchorPos(new Vector2(0f, -2000f), FadeTime, false).SetEase(Ease.InOutSine);
+        ShopCanvasGroup.DOFade(1, FadeTime);
+        // wait for the animation to finish
         yield return new WaitForSeconds(0.8f);
         ShopPanel.SetActive(false);
     }
+
 
     public void SettingsPanelFadeIn()
     {
@@ -72,24 +79,30 @@ public class MainMenuController : MonoBehaviour
         SettingsRectTransform.transform.localPosition = new Vector3(0f, -2000f, 0f);
         SettingsRectTransform.DOAnchorPos(new Vector2(0f, 0f), FadeTime, false).SetEase(Ease.InOutSine);
         SettingsCanvasGroup.DOFade(1, FadeTime);
-        SettingsPanelBackground.DOColor(new Color(_settingsPanelColor.r, _settingsPanelColor.g, _settingsPanelColor.b, 0.8f), 1.5f);
+        StartCoroutine(ChangeSettingsPanelBackground());
+    }
+
+    IEnumerator ChangeSettingsPanelBackground()
+    {
+        yield return new WaitForSeconds(0.8f);
+        SettingsPanelBackground.DOColor(new Color(_settingsPanelColor.r, _settingsPanelColor.g, _settingsPanelColor.b, 0.8f), 0.2f);
     }
 
 
     public void SettingsPanelFadeOut()
     {
-        SettingsPanelBackground.DOColor(new Color(_settingsPanelColor.r, _settingsPanelColor.g, _settingsPanelColor.b, 0f), 1f);
+        SettingsPanelBackground.color = new Color(_settingsPanelColor.r, _settingsPanelColor.g, _settingsPanelColor.b, 0f);
+        StartCoroutine(AnimateSettingsPanelFadeOut());
+
+    }
+
+    IEnumerator AnimateSettingsPanelFadeOut()
+    {
         SettingsCanvasGroup.alpha = 1f;
         SettingsRectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
         SettingsRectTransform.DOAnchorPos(new Vector2(0f, -2000f), FadeTime, false).SetEase(Ease.InOutSine);
         SettingsCanvasGroup.DOFade(1, FadeTime);
         // wait for the animation to finish
-        StartCoroutine(DisableSettingsPanel());
-
-    }
-
-    IEnumerator DisableSettingsPanel()
-    {
         yield return new WaitForSeconds(0.8f);
         SettingsPanel.SetActive(false);
     }
