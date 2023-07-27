@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SNG.Save;
+
 
 public class GameEndController : MonoBehaviour
 {
@@ -17,6 +19,9 @@ public class GameEndController : MonoBehaviour
     }
 
     public void OnContinueButtonClicked(){
+        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
+            AudioManager.instance.Play("click");
+        }
         // Hide the game end screen
         this.gameObject.SetActive(false);
 
@@ -24,6 +29,9 @@ public class GameEndController : MonoBehaviour
     }
 
     public void OnExitButtonClicked(){
+        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
+            AudioManager.instance.Play("click");
+        }
         // Hide the game end screen
         this.gameObject.SetActive(false);
 

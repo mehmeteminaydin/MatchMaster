@@ -113,12 +113,36 @@ public class UIController : MonoBehaviour
         SaveStar();
         Debug.Log(" _starCount: " + _starCount + "You won!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
         GameEndScreen.SetActive(true);
-        for (int i = 0; i < GameEndStarImages.Count; i++)
-        {
-            GameEndStarImages[i].enabled = (i < _starCount); // Enable the star image if its index is less than _starCount
-        }
+        // I want to enable the star images according to the _starCount by using animation
+        // in each loop, I will play the audio
+        StartCoroutine(PlayStarAnimation());
+        
         GameEndWin.enabled = true;
         GameEndLose.enabled = false;
+    }
+
+    IEnumerator PlayStarAnimation()
+    {
+        for (int i = 0; i < _starCount; i++)
+        {
+            if(i == 0){
+                GameEndStarImages[2].enabled = false;
+                GameEndStarImages[1].enabled = false;
+                GameEndStarImages[0].enabled = true;
+            }
+            else if (i == 1){
+                GameEndStarImages[2].enabled = false;
+                GameEndStarImages[1].enabled = true;
+            }
+            else{
+                GameEndStarImages[2].enabled = true;
+            }
+            if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
+            {    
+                AudioManager.instance.Play("star_collect");
+            }
+            yield return new WaitForSeconds(0.43f);
+        }
     }
 
     public void GameOverLost()
