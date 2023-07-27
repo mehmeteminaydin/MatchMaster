@@ -176,7 +176,7 @@ public class Dragging : MonoBehaviour
                 ObjectCounter = ObjectCounter - 2;
                 if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
                 {    
-                    AudioManager.instance.Play("matched_2");
+                    AudioManager.instance.PlaySoundEffect("matched_2");
                 }
             }
             else{

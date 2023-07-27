@@ -20,7 +20,7 @@ public class GameEndController : MonoBehaviour
 
     public void OnContinueButtonClicked(){
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         // Hide the game end screen
         this.gameObject.SetActive(false);
@@ -30,7 +30,7 @@ public class GameEndController : MonoBehaviour
 
     public void OnExitButtonClicked(){
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         // Hide the game end screen
         this.gameObject.SetActive(false);

@@ -22,7 +22,7 @@ public class ShopController : MonoBehaviour
     
     public void OnBuyButtonClick(int index)
     {
-        AudioManager.instance.Play("click");
+        AudioManager.instance.PlaySoundEffect("click");
         if (index == SaveGame.Instance.PlayerData.SelectedThemeIndex)
         {
             return;

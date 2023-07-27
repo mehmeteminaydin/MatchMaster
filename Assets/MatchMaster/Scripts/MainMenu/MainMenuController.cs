@@ -34,7 +34,7 @@ public class MainMenuController : MonoBehaviour
 
     public void OnPlayButtonClicked(){
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
     }
@@ -43,7 +43,7 @@ public class MainMenuController : MonoBehaviour
     public void ShopPanelFadeIn()
     {
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }        
         ShopExitButton.interactable = false;
         ShopPanelBackground.color = new Color(_shopPanelColor.r, _shopPanelColor.g, _shopPanelColor.b, 0f);
@@ -67,7 +67,7 @@ public class MainMenuController : MonoBehaviour
     public void ShopPanelFadeOut()
     {
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         ShopPanelBackground.color = new Color(_shopPanelColor.r, _shopPanelColor.g, _shopPanelColor.b, 0f);
 
@@ -90,7 +90,7 @@ public class MainMenuController : MonoBehaviour
     public void SettingsPanelFadeIn()
     {
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         SettingsExitButton.interactable = false;
         SettingsPanelBackground.color = new Color(_settingsPanelColor.r, _settingsPanelColor.g, _settingsPanelColor.b, 0f);
@@ -116,7 +116,7 @@ public class MainMenuController : MonoBehaviour
     public void SettingsPanelFadeOut()
     {
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         SettingsPanelBackground.color = new Color(_settingsPanelColor.r, _settingsPanelColor.g, _settingsPanelColor.b, 0f);
         StartCoroutine(AnimateSettingsPanelFadeOut());

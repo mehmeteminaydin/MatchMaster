@@ -5262,7 +5262,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
       propertyPath: sounds.Array.data[0].volume
-      value: 0.3
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: backgroundMusicSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2f0e90e4ecbc5485b9e3e4e5d7d4b25a, type: 3}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[0].name
+      value: click
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 48c49546e33b944d8bae7250a7a7790b, type: 3}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[1].name
+      value: matched_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 58e60f2876e34491dae0783186b40da7, type: 3}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[2].name
+      value: star_collect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[0].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[1].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[2].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[0].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[1].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: soundEffectSounds.Array.data[2].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: backgroundMusicSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fd4292c99ea14b49a87329b6ff4577d, type: 3}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: backgroundMusicSounds.Array.data[0].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: backgroundMusicSounds.Array.data[0].name
+      value: bg_music
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: backgroundMusicSounds.Array.data[0].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557770653759954429, guid: c5790dd11ef3b411a922f4d0e5f584a3, type: 3}
+      propertyPath: backgroundMusicSounds.Array.data[0].volume
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

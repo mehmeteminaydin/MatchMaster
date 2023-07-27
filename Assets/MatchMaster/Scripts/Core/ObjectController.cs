@@ -100,7 +100,7 @@ public class ObjectController : MonoBehaviour
         _isHintActive = true;
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
         {    
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         // Select a random index for the twin type
         int randomTypeIndex = _random.Next(0, Level1ObjectNumber);
@@ -255,7 +255,7 @@ public class ObjectController : MonoBehaviour
         }
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
         {    
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         Dragging.ClearHole();
         _isMagnetActive = true;
@@ -307,7 +307,7 @@ public class ObjectController : MonoBehaviour
         Destroy(_instantiatedObjects[index2]);
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
         {    
-            AudioManager.instance.Play("matched_2");
+            AudioManager.instance.PlaySoundEffect("matched_2");
         }
         _instantiatedObjects[index1] = null;
         _instantiatedObjects[index2] = null;

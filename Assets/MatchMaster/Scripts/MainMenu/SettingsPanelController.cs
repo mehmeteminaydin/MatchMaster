@@ -41,18 +41,18 @@ public class SettingsPanelController : MonoBehaviour
     public void OnMusicButtonClicked(){
     
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         // Change the sound button background image when pressed
         if(MusicButton.sprite == TurnedOn){
             SaveGame.Instance.GeneralData.IsMusicOn = false;
-            AudioManager.instance.Stop("bg_music");
+            AudioManager.instance.StopBackgroundMusic("bg_music");
             // set the position of the ButtonCircleImage as LeftSight position
             MusicButtonCircleImage.transform.position = MusicLeftSight.transform.position;
             MusicButton.sprite = TurnedOff;
         }else{
             SaveGame.Instance.GeneralData.IsMusicOn = true;
-            AudioManager.instance.Play("bg_music");
+            AudioManager.instance.PlayBackgroundMusic("bg_music");
             // set the position of the ButtonCircleImage as RightSight position
             MusicButtonCircleImage.transform.position = MusicRightSight.transform.position;
             MusicButton.sprite = TurnedOn;
@@ -63,7 +63,7 @@ public class SettingsPanelController : MonoBehaviour
     public void OnSoundButtonClicked(){
         
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySoundEffect("click");
         }
         // Change the sound button background image when pressed
         if(SoundButton.sprite == TurnedOn){

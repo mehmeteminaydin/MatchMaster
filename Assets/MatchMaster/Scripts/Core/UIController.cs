@@ -139,7 +139,7 @@ public class UIController : MonoBehaviour
             }
             if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
             {    
-                AudioManager.instance.Play("star_collect");
+                AudioManager.instance.PlaySoundEffect("star_collect");
             }
             yield return new WaitForSeconds(0.43f);
         }
