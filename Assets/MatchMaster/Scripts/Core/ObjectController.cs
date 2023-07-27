@@ -98,7 +98,10 @@ public class ObjectController : MonoBehaviour
             return;
         }
         _isHintActive = true;
-
+        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
+        {    
+            AudioManager.instance.PlaySoundEffect("click");
+        }
         // Select a random index for the twin type
         int randomTypeIndex = _random.Next(0, Level1ObjectNumber);
         bool nullFlag = true;
@@ -250,6 +253,10 @@ public class ObjectController : MonoBehaviour
                 return;
             }
         }
+        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
+        {    
+            AudioManager.instance.PlaySoundEffect("click");
+        }
         Dragging.ClearHole();
         _isMagnetActive = true;
 
@@ -298,6 +305,10 @@ public class ObjectController : MonoBehaviour
         _isMagnetActive = false;
         Destroy(_instantiatedObjects[index1]);
         Destroy(_instantiatedObjects[index2]);
+        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
+        {    
+            AudioManager.instance.PlaySoundEffect("matched_2");
+        }
         _instantiatedObjects[index1] = null;
         _instantiatedObjects[index2] = null;
         Dragging.DecreaseObjectCounter();

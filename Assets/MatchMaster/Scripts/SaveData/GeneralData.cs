@@ -7,11 +7,7 @@ namespace SNG.Save
     public class GeneralData
     {
 
-        public int Test = 5;
-
-        public GeneralData()
-        {
-            Test = 51;
-        }
+        public bool IsSoundEffectsOn = true;
+        public bool IsMusicOn = true;
     }
 }

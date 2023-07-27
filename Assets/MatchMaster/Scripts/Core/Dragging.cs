@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SNG.Save;
 
 public class Dragging : MonoBehaviour
 {
@@ -173,6 +174,10 @@ public class Dragging : MonoBehaviour
                 Destroy(_toDragObjectRight);
                 OnObjectDestroyed(_toDragObjectRight);
                 ObjectCounter = ObjectCounter - 2;
+                if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
+                {    
+                    AudioManager.instance.PlaySoundEffect("matched_2");
+                }
             }
             else{
                 StartCoroutine(WaitForSecondsAndThrowObjects());
