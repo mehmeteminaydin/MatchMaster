@@ -20,6 +20,7 @@ namespace Configuration
         public int EachObjectCount;  // EachObjectCount = 4
         public int TotalObjectCount; // TotalObjectCount = 12,
         public float LevelTimeInSeconds;
+        public List<float> StarEarningRateList; // 0-1;
         
     }
 

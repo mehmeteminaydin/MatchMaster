@@ -18,13 +18,25 @@ MonoBehaviour:
     EachObjectCount: 4
     TotalObjectCount: 40
     LevelTimeInSeconds: 100
+    StarEarningRateList:
+    - 0.1
+    - 0.3
+    - 0.5
   - LevelNumber: 2
     TotalObjectType: 12
     EachObjectCount: 4
     TotalObjectCount: 48
     LevelTimeInSeconds: 110
+    StarEarningRateList:
+    - 0.2
+    - 0.4
+    - 0.6
   - LevelNumber: 3
     TotalObjectType: 14
     EachObjectCount: 4
     TotalObjectCount: 56
     LevelTimeInSeconds: 120
+    StarEarningRateList:
+    - 0.3
+    - 0.5
+    - 0.7
