@@ -230,14 +230,18 @@ public class ObjectController : MonoBehaviour
         if(_isHintActive){
             return;
         }
+        if(_isMagnetActive){
+            return;
+        }
+        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
+        {    
+            AudioManager.instance.PlaySoundEffect("click");
+        }
         ChangeTagToUntagged();
         OnMagnetButtonPressHelper();
     }
     public void OnMagnetButtonPressHelper()
     {
-        if(_isMagnetActive){
-            return;
-        }
         if(SaveGame.Instance.PlayerData.MagnetCounter == 0){
             ChangeTagToCube();
             return;
@@ -253,10 +257,7 @@ public class ObjectController : MonoBehaviour
                 return;
             }
         }
-        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
-        {    
-            AudioManager.instance.PlaySoundEffect("click");
-        }
+        
         Dragging.ClearHole();
         _isMagnetActive = true;
 
