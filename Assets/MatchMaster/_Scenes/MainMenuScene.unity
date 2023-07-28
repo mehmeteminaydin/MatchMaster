@@ -3870,6 +3870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _themeConfig: {fileID: 11400000, guid: c65063682728d48e58f13d5e6348adf6, type: 2}
+  _levelConfig: {fileID: 11400000, guid: 22f8bd0d2a2024099810098059d2b3a8, type: 2}
 --- !u!4 &1821407428
 Transform:
   m_ObjectHideFlags: 0
@@ -4421,6 +4422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8683b1eb414174b9f8c52b034bfa5b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LevelText: {fileID: 982741388}
   SettingsPanel: {fileID: 649098586}
   ShopPanel: {fileID: 1192054502}
   FadeTime: 1

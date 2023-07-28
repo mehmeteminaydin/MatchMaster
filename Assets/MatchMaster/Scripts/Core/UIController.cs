@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SNG.Save;
+using SNG.Configs;
 using UnityEngine.UI;
 
 
@@ -19,7 +20,7 @@ public class UIController : MonoBehaviour
     public TMPro.TextMeshProUGUI TotalStarCount;
     public TMPro.TextMeshProUGUI TimerText;
 
-    public float TotalTime = 60f; // Total time in seconds (1 minute)
+    public float TotalTime; // Total time in seconds
 
     private bool _isGameOver = false;
     private bool _isTimeOver = false;
@@ -30,6 +31,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TotalTime = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LevelTimeInSeconds;
         TotalStarCount.text = SaveGame.Instance.PlayerData.TotalStar.ToString();
         _currentTime = TotalTime;
     }
@@ -109,6 +111,12 @@ public class UIController : MonoBehaviour
 
     public void GameOverWon()
     {
+        if(SaveGame.Instance.GeneralData.CurrentLevel == 3){
+            SaveGame.Instance.GeneralData.CurrentLevel = 3;
+        }
+        else{
+            SaveGame.Instance.GeneralData.CurrentLevel++;
+        }
         _isGameOver = true;
         SaveStar();
         Debug.Log(" _starCount: " + _starCount + "You won!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
