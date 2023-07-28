@@ -21,6 +21,16 @@ namespace Configuration
         public int TotalObjectCount; // TotalObjectCount = 12,
         public float LevelTimeInSeconds;
         public List<float> StarEarningRateList; // 0-1;
+
+        private System.Random _random = new System.Random();
+
+
+        public void LastLevelConfig()
+        {
+            TotalObjectType = _random.Next(TotalObjectType-2, TotalObjectType+2);
+            TotalObjectCount = TotalObjectType * EachObjectCount;
+            LevelTimeInSeconds = _random.Next((int)(LevelTimeInSeconds-20), (int)(LevelTimeInSeconds+20));
+        }
         
     }
 

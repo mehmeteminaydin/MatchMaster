@@ -135,11 +135,15 @@ public class UIController : MonoBehaviour
 
     public void GameOverWon()
     {
-        if(SaveGame.Instance.GeneralData.CurrentLevel == 3){
-            SaveGame.Instance.GeneralData.CurrentLevel = 3;
+        if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
+            SaveGame.Instance.GeneralData.CurrentLevel = 4;
+            Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
         }
         else{
             SaveGame.Instance.GeneralData.CurrentLevel++;
+            if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
+                Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
+            }
         }
         _isGameOver = true;
         SaveStar();
@@ -185,6 +189,9 @@ public class UIController : MonoBehaviour
 
     public void GameOverLost()
     {
+        if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
+            Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
+        }
         _isGameOver = true;
         Debug.Log(" _starCount: " + _starCount + "You lost!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
 
