@@ -143,6 +143,12 @@ public class UIController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.43f);
         }
+        // if there is no star
+        if(_starCount == 0){
+            GameEndStarImages[2].enabled = false;
+            GameEndStarImages[1].enabled = false;
+            GameEndStarImages[0].enabled = false;
+        }
     }
 
     public void GameOverLost()
