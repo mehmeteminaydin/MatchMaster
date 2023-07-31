@@ -4,14 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using SNG.Save;
-
+using SNG.Configs;
 
 public class ObjectController : MonoBehaviour
 {
     public Dragging Dragging;
     public int[] ObjectNumberList;
     public List<GameObject> ObjectList;
-    public int Level1ObjectNumber = 2;
+
+    // example: apple x 4 , pear x 4, banana x 4
+    public int TotalObjectType; // TotalObjectType = 3
+    public int EachObjectCount; // EachObjectCount = 4
+    
     // I will edit the textmesh pro on Ui
     public TMPro.TextMeshProUGUI HintText;
     public TMPro.TextMeshProUGUI MagnetText;
@@ -29,6 +33,9 @@ public class ObjectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
+        TotalObjectType = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].TotalObjectType;
+        EachObjectCount = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].EachObjectCount;
+
         SaveGame.Instance.PlayerData.HintCounter = 9;
         SaveGame.Instance.PlayerData.MagnetCounter = 9;
         
@@ -41,9 +48,9 @@ public class ObjectController : MonoBehaviour
 
         CreateNumberList();
         
-        for (int i = 0; i < Level1ObjectNumber; i++)
+        for (int i = 0; i < TotalObjectType; i++)
         {
-            for(int j = 0; j < 4; j++){
+            for(int j = 0; j < EachObjectCount; j++){
                 GameObject newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
                 GeneratePosition();
                 Vector3 position = new Vector3(_xCoor, 540, _zCoor);
@@ -103,12 +110,12 @@ public class ObjectController : MonoBehaviour
             AudioManager.instance.PlaySoundEffect("click");
         }
         // Select a random index for the twin type
-        int randomTypeIndex = _random.Next(0, Level1ObjectNumber);
+        int randomTypeIndex = _random.Next(0, TotalObjectType);
         bool nullFlag = true;
         // Calculate the indices of the twin type
-        int startIndex = randomTypeIndex * 4;
+        int startIndex = randomTypeIndex * EachObjectCount;
         // if start index is null, find the next valid index
-        for(int j = 0; j < 4; j++){
+        for(int j = 0; j < EachObjectCount; j++){
             if(_instantiatedObjects[startIndex + j] != null){
                 nullFlag = false;
                 break;
@@ -205,7 +212,7 @@ public class ObjectController : MonoBehaviour
 
         List<int> validIndices = new List<int>();
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < EachObjectCount; i++)
         {
             int currentIndex = startIndex + i;
 
@@ -262,12 +269,12 @@ public class ObjectController : MonoBehaviour
         _isMagnetActive = true;
 
         // Select a random index for the twin type
-        int randomTypeIndex = _random.Next(0, Level1ObjectNumber);
+        int randomTypeIndex = _random.Next(0, TotalObjectType);
         bool nullFlag = true;
         // Calculate the indices of the twin type
-        int startIndex = randomTypeIndex * 4;
+        int startIndex = randomTypeIndex * EachObjectCount;
         // if start index is null, find the next valid index
-        for(int j = 0; j < 4; j++){
+        for(int j = 0; j < EachObjectCount; j++){
             if(_instantiatedObjects[startIndex + j] != null){
                 nullFlag = false;
                 break;

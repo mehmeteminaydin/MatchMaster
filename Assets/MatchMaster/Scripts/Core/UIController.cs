@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SNG.Save;
+using SNG.Configs;
 using UnityEngine.UI;
 
 
@@ -14,12 +15,14 @@ public class UIController : MonoBehaviour
     public Dragging Dragging;
     public Image TimeBarImage;
     public Image TimeBarBGImage;
+    public GameObject TimeBarPosition;
     public List<Image> StarImages;
+    public List<Image> StarBGImages;
     public List<Image> GameEndStarImages;
     public TMPro.TextMeshProUGUI TotalStarCount;
     public TMPro.TextMeshProUGUI TimerText;
 
-    public float TotalTime = 60f; // Total time in seconds (1 minute)
+    public float TotalTime; // Total time in seconds
 
     private bool _isGameOver = false;
     private bool _isTimeOver = false;
@@ -30,6 +33,29 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // using TimeBarPosition GameObject, get the left edge of it
+        float leftEdgeX = 0 - TimeBarPosition.GetComponent<RectTransform>().rect.width / 2;
+        float rightEdgeX = 0 + TimeBarPosition.GetComponent<RectTransform>().rect.width / 2;
+        float distance = TimeBarPosition.GetComponent<RectTransform>().rect.width;
+        float offset = 0f;
+        float star1X = leftEdgeX + (distance * Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[0]) + offset;
+        float star2X = leftEdgeX + (distance * Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[1]) + offset;
+        float star3X = leftEdgeX + (distance * Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[2]) + offset;
+        Debug.Log("star1X: " + star1X);
+        Debug.Log("star2X: " + star2X);
+        Debug.Log("star3X: " + star3X);
+        // change the local position of the stars
+        StarImages[0].GetComponent<RectTransform>().localPosition = new Vector3(star1X, StarImages[0].GetComponent<RectTransform>().localPosition.y, StarImages[0].GetComponent<RectTransform>().localPosition.z);
+        StarImages[1].GetComponent<RectTransform>().localPosition = new Vector3(star2X, StarImages[1].GetComponent<RectTransform>().localPosition.y, StarImages[1].GetComponent<RectTransform>().localPosition.z);
+        StarImages[2].GetComponent<RectTransform>().localPosition = new Vector3(star3X, StarImages[2].GetComponent<RectTransform>().localPosition.y, StarImages[2].GetComponent<RectTransform>().localPosition.z);
+        StarBGImages[0].GetComponent<RectTransform>().localPosition = new Vector3(star1X, StarBGImages[0].GetComponent<RectTransform>().localPosition.y, StarBGImages[0].GetComponent<RectTransform>().localPosition.z);
+        StarBGImages[1].GetComponent<RectTransform>().localPosition = new Vector3(star2X, StarBGImages[1].GetComponent<RectTransform>().localPosition.y, StarBGImages[1].GetComponent<RectTransform>().localPosition.z);
+        StarBGImages[2].GetComponent<RectTransform>().localPosition = new Vector3(star3X, StarBGImages[2].GetComponent<RectTransform>().localPosition.y, StarBGImages[2].GetComponent<RectTransform>().localPosition.z);
+        
+
+    
+
+        TotalTime = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LevelTimeInSeconds;
         TotalStarCount.text = SaveGame.Instance.PlayerData.TotalStar.ToString();
         _currentTime = TotalTime;
     }
@@ -48,13 +74,13 @@ public class UIController : MonoBehaviour
 
         //update the UI text with the current time
         TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        if(_currentTime/TotalTime >= 0.5f){
+        if(_currentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[2]){
             _starCount = 3;
         }
-        else if(_currentTime/TotalTime >= 0.3f && _currentTime/TotalTime < 0.5f){
+        else if(_currentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[1] && _currentTime/TotalTime < Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[2]){
             _starCount = 2;
         }
-        else if(_currentTime/TotalTime >= 0.1f && _currentTime/TotalTime < 0.3f){
+        else if(_currentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[0] && _currentTime/TotalTime < Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[1]){
             _starCount = 1;
         }
         else{
@@ -109,6 +135,16 @@ public class UIController : MonoBehaviour
 
     public void GameOverWon()
     {
+        if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
+            SaveGame.Instance.GeneralData.CurrentLevel = 4;
+            Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
+        }
+        else{
+            SaveGame.Instance.GeneralData.CurrentLevel++;
+            if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
+                Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
+            }
+        }
         _isGameOver = true;
         SaveStar();
         Debug.Log(" _starCount: " + _starCount + "You won!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
@@ -153,6 +189,9 @@ public class UIController : MonoBehaviour
 
     public void GameOverLost()
     {
+        if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
+            Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
+        }
         _isGameOver = true;
         Debug.Log(" _starCount: " + _starCount + "You lost!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
 

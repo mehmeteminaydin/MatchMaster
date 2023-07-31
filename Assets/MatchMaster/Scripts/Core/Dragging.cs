@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SNG.Save;
+using SNG.Configs;
+
 
 public class Dragging : MonoBehaviour
 {
     public UIController UIController;
     public ObjectController ObjectController;
 
-    public int ObjectCounter = 40; // I have created 10 unique x 4 objects . I want to check if all of them are destroyed.
+    public int ObjectCounter;
     public GameObject HoleObject;
 
     private float _dist;
@@ -40,6 +42,7 @@ public class Dragging : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ObjectCounter = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].TotalObjectCount;
         _collider = HoleObject.GetComponent<Collider>();
     }
     // Update is called once per frame

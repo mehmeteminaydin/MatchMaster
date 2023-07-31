@@ -11,8 +11,10 @@ namespace SNG.Configs{
         private static Configs s_instance;
 
         [SerializeField] private ThemeConfig _themeConfig = null;
+        [SerializeField] private LevelConfig _levelConfig = null;
 
         public static ThemeConfig ThemeConfig => s_instance._themeConfig;
+        public static LevelConfig LevelConfig => s_instance._levelConfig;
 
         void Awake()
         {
