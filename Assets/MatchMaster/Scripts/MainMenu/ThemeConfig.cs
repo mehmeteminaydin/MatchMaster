@@ -14,13 +14,13 @@ namespace Configuration{
     [System.Serializable]
     public class Theme
     {
-        public Sprite ThemeImage;
+        public Material ThemeMaterial;
         public int ThemePrice;
         public bool IsThemeUnlocked;
 
         public Theme()
         {
-            ThemeImage = null;
+            ThemeMaterial = null;
             ThemePrice = 0;
             IsThemeUnlocked = false;
         }

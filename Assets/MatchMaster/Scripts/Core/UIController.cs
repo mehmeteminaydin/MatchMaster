@@ -23,7 +23,8 @@ public class UIController : MonoBehaviour
     public TMPro.TextMeshProUGUI TimerText;
 
     public float TotalTime; // Total time in seconds
-
+    
+    private bool _isStarAnimationPlaying = false;
     private bool _isGameOver = false;
     private bool _isTimeOver = false;
     private long _starCount = 3;
@@ -41,9 +42,7 @@ public class UIController : MonoBehaviour
         float star1X = leftEdgeX + (distance * Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[0]) + offset;
         float star2X = leftEdgeX + (distance * Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[1]) + offset;
         float star3X = leftEdgeX + (distance * Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[2]) + offset;
-        Debug.Log("star1X: " + star1X);
-        Debug.Log("star2X: " + star2X);
-        Debug.Log("star3X: " + star3X);
+
         // change the local position of the stars
         StarImages[0].GetComponent<RectTransform>().localPosition = new Vector3(star1X, StarImages[0].GetComponent<RectTransform>().localPosition.y, StarImages[0].GetComponent<RectTransform>().localPosition.z);
         StarImages[1].GetComponent<RectTransform>().localPosition = new Vector3(star2X, StarImages[1].GetComponent<RectTransform>().localPosition.y, StarImages[1].GetComponent<RectTransform>().localPosition.z);
@@ -147,10 +146,10 @@ public class UIController : MonoBehaviour
         }
         _isGameOver = true;
         SaveStar();
-        Debug.Log(" _starCount: " + _starCount + "You won!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
         GameEndScreen.SetActive(true);
         // I want to enable the star images according to the _starCount by using animation
         // in each loop, I will play the audio
+        _isStarAnimationPlaying = true;
         StartCoroutine(PlayStarAnimation());
         
         GameEndWin.enabled = true;
@@ -185,6 +184,7 @@ public class UIController : MonoBehaviour
             GameEndStarImages[1].enabled = false;
             GameEndStarImages[0].enabled = false;
         }
+        _isStarAnimationPlaying = false;
     }
 
     public void GameOverLost()
@@ -193,7 +193,6 @@ public class UIController : MonoBehaviour
             Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
         }
         _isGameOver = true;
-        Debug.Log(" _starCount: " + _starCount + "You lost!"+ "Total Star Count: " + SaveGame.Instance.PlayerData.TotalStar);
 
         Dragging.GameOver();
         
@@ -204,5 +203,31 @@ public class UIController : MonoBehaviour
         }
         GameEndWin.enabled = false;
         GameEndLose.enabled = true;
+    }
+
+    public void OnContinueButtonClicked(){
+        if(_isStarAnimationPlaying){
+            return;
+        }
+        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
+            AudioManager.instance.PlaySoundEffect("click");
+        }
+        // Hide the game end screen
+        GameEndScreen.SetActive(false);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+    }
+
+    public void OnExitButtonClicked(){
+        if(_isStarAnimationPlaying){
+            return;
+        }
+        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){
+            AudioManager.instance.PlaySoundEffect("click");
+        }
+        // Hide the game end screen
+        GameEndScreen.SetActive(false);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
     }
 }

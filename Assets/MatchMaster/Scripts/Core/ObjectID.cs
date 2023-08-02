@@ -33,5 +33,7 @@ public class ObjectID : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 540, transform.position.z);
         }
+
     }
+
 }

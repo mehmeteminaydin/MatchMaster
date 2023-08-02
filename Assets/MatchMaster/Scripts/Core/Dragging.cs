@@ -112,7 +112,7 @@ public class Dragging : MonoBehaviour
             v3 = Camera.main.ScreenToWorldPoint(v3);
             v3.x += _xOffset;
             v3.z += _zOffset;
-            _toDrag.position = new Vector3(v3.x , _tempLocation.y, v3.z); // Keep the Y position unchanged
+            _toDrag.position = new Vector3(v3.x , _tempLocation.y + 0.5f, v3.z); // Keep the Y position unchanged
         }
 
         if (_dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
@@ -211,6 +211,9 @@ public class Dragging : MonoBehaviour
         _toDragObjectLeft.transform.position = new Vector3(_xCoor, _leftOriginalPosition.y, _zCoor);
         GeneratePosition();
         _toDragObjectRight.transform.position = new Vector3(_xCoor, _rightOriginalPosition.y, _zCoor); 
+
+        _toDragObjectLeft = null;
+        _toDragObjectRight = null;
     }
     
     void OnObjectDestroyed(GameObject gameObject)
@@ -249,5 +252,31 @@ public class Dragging : MonoBehaviour
     {
         _isGameOver = true;
     }
+
+    public void CheckLeftHole(Transform toDrag)
+    {
+        if(!_isLeft)
+        {
+            toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+            toDrag.gameObject.tag = "Untagged";
+            _leftOriginalPosition = _tempLocation;
+            _toDragObjectLeft = toDrag.gameObject;
+            _isLeft = true;
+        }
+    }
+
+    public void CheckRightHole(Transform toDrag)
+    {
+        if(!_isRight)
+        {
+            toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+            toDrag.gameObject.tag = "Untagged";
+            _rightOriginalPosition = _tempLocation;
+            _toDragObjectRight = toDrag.gameObject;
+            _isRight = true;
+        }
+    }
+    
+
 
 }
