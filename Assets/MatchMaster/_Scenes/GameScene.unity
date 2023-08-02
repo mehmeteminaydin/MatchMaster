@@ -4760,7 +4760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectMaterials:
   - {fileID: 2100000, guid: dcf86e29809becd468a6224a22ad8abb, type: 2}
-  - {fileID: 2100000, guid: 96826cc67b3254dc3805f78609ae3940, type: 2}
+  - {fileID: 2100000, guid: 8c15d579eda634742b00297ce34562cc, type: 2}
   Dragging: {fileID: 963194229}
   ObjectNumberList: 
   ObjectList:
