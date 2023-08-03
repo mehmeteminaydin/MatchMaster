@@ -57,6 +57,9 @@ namespace SNG.Save
         /// </summary>
         private void FirstTime()
         {
+            // turn off vSync
+            QualitySettings.vSyncCount = 0;
+            
             _generalData = new GeneralData();
             _playerData = new PlayerData();
             PlayerPrefs.SetInt("FirstTime", 1);
