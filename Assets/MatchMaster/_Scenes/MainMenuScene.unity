@@ -4243,6 +4243,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 907247113994694144, guid: b27f5b992ea0f40e4a75bd00e939ed66, type: 3}
+      propertyPath: _generalData.IsThemeUnlocked.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 907247113994694144, guid: b27f5b992ea0f40e4a75bd00e939ed66, type: 3}
+      propertyPath: _generalData.IsThemeUnlocked.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2643025417561545606, guid: b27f5b992ea0f40e4a75bd00e939ed66, type: 3}
       propertyPath: m_Name
       value: SaveData

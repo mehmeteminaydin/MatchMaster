@@ -27,18 +27,18 @@ public class ShopController : MonoBehaviour
         {
             return;
         }
-        if (SaveGame.Instance.PlayerData.TotalStar >= Configs.ThemeConfig.ThemeList[index].ThemePrice && !Configs.ThemeConfig.ThemeList[index].IsThemeUnlocked)
+        if (SaveGame.Instance.PlayerData.TotalStar >= Configs.ThemeConfig.ThemeList[index].ThemePrice && !SaveGame.Instance.GeneralData.IsThemeUnlocked[index])
         {
             SaveGame.Instance.PlayerData.TotalStar -= Configs.ThemeConfig.ThemeList[index].ThemePrice;
-            Configs.ThemeConfig.ThemeList[index].IsThemeUnlocked = true;
+            SaveGame.Instance.GeneralData.IsThemeUnlocked[index] = true;
             SaveGame.Instance.PlayerData.SelectedThemeIndex = index;
             UpdateButtonUi();
             
         }
-        if(SaveGame.Instance.PlayerData.TotalStar < Configs.ThemeConfig.ThemeList[index].ThemePrice && !Configs.ThemeConfig.ThemeList[index].IsThemeUnlocked){
+        if(SaveGame.Instance.PlayerData.TotalStar < Configs.ThemeConfig.ThemeList[index].ThemePrice && !SaveGame.Instance.GeneralData.IsThemeUnlocked[index]){
             Debug.Log("Not enough star");
         }
-        if (Configs.ThemeConfig.ThemeList[index].IsThemeUnlocked){
+        if (SaveGame.Instance.GeneralData.IsThemeUnlocked[index]){
             SaveGame.Instance.PlayerData.SelectedThemeIndex = index;
             UpdateButtonUi();
         }
@@ -58,7 +58,7 @@ public class ShopController : MonoBehaviour
             {
                 ButtonList[i].interactable = true;
                 //for bought themes
-                if(Configs.ThemeConfig.ThemeList[i].IsThemeUnlocked){
+                if(SaveGame.Instance.GeneralData.IsThemeUnlocked[i]){
                     PriceTextList[i].text = "Select";
                     ButtonList[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.75f);
                 }

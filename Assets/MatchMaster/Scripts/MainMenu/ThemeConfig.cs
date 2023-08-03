@@ -16,13 +16,11 @@ namespace Configuration{
     {
         public Material ThemeMaterial;
         public int ThemePrice;
-        public bool IsThemeUnlocked;
 
         public Theme()
         {
             ThemeMaterial = null;
             ThemePrice = 0;
-            IsThemeUnlocked = false;
         }
     }
 }
