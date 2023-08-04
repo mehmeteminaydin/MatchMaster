@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GameScene
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 74f678c6cdf0341af8cf909fb91312cc, type: 3}
+    - {fileID: 2800000, guid: f846d98b16b3c4c5a9fce74357765304, type: 3}
+    - {fileID: 2800000, guid: 2549fc92aa84b42999c0bab48f9e587d, type: 3}
+    - {fileID: 2800000, guid: c0affacec09b14c34851a0fdc62cdfe5, type: 3}
+    - {fileID: 2800000, guid: 5c89b588b3ecc4f5a9e8a5ca87cd12b2, type: 3}
+    - {fileID: 2800000, guid: 9cb67164d7b084140b4d1f3708383a44, type: 3}
+    - {fileID: 2800000, guid: c74867d21e4e9434f86a2395bbcfa0a5, type: 3}
+    - {fileID: 2800000, guid: 9a6e6b08361174f0c89d7eb04767e48a, type: 3}
+    - {fileID: 2800000, guid: e24cd38428e084d0bb71a233d344f76e, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 2549fc92aa84b42999c0bab48f9e587d: 21300000
+    - c74867d21e4e9434f86a2395bbcfa0a5: 21300000
+    - 9cb67164d7b084140b4d1f3708383a44: 21300000
+    - e24cd38428e084d0bb71a233d344f76e: 21300000
+    - 74f678c6cdf0341af8cf909fb91312cc: 21300000
+    - 9a6e6b08361174f0c89d7eb04767e48a: 21300000
+    - 5c89b588b3ecc4f5a9e8a5ca87cd12b2: 21300000
+    - f846d98b16b3c4c5a9fce74357765304: 21300000
+    - c0affacec09b14c34851a0fdc62cdfe5: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 2549fc92aa84b42999c0bab48f9e587d, type: 3}
+  - {fileID: 21300000, guid: c74867d21e4e9434f86a2395bbcfa0a5, type: 3}
+  - {fileID: 21300000, guid: 9cb67164d7b084140b4d1f3708383a44, type: 3}
+  - {fileID: 21300000, guid: e24cd38428e084d0bb71a233d344f76e, type: 3}
+  - {fileID: 21300000, guid: 74f678c6cdf0341af8cf909fb91312cc, type: 3}
+  - {fileID: 21300000, guid: 9a6e6b08361174f0c89d7eb04767e48a, type: 3}
+  - {fileID: 21300000, guid: 5c89b588b3ecc4f5a9e8a5ca87cd12b2, type: 3}
+  - {fileID: 21300000, guid: f846d98b16b3c4c5a9fce74357765304, type: 3}
+  - {fileID: 21300000, guid: c0affacec09b14c34851a0fdc62cdfe5, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - hint
+  - time_bar
+  - star
+  - time_bar_empty
+  - time_bg
+  - star_empty
+  - power_bg
+  - time_icon
+  - magnet
+  m_RenderDataMap: {}
+  m_Tag: GameScene
+  m_IsVariant: 0
