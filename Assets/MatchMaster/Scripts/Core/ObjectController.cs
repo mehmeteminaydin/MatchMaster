@@ -57,6 +57,8 @@ public class ObjectController : MonoBehaviour
                 Vector3 position = new Vector3(_xCoor, 540, _zCoor);
                 newObject.transform.position = position;
                 _instantiatedObjects.Add(newObject);
+                //get the ObjectID script from the newObject
+                newObject.GetComponent<ObjectID>().OnSpecificEvent += Dragging.ReactToCollision;
             }
         }
     }
@@ -323,6 +325,8 @@ public class ObjectController : MonoBehaviour
 
         yield return new WaitForSeconds(moveDuration);
         _isMagnetActive = false;
+        _instantiatedObjects[index1].GetComponent<ObjectID>().OnSpecificEvent -= Dragging.ReactToCollision;
+        _instantiatedObjects[index2].GetComponent<ObjectID>().OnSpecificEvent -= Dragging.ReactToCollision;
         Destroy(_instantiatedObjects[index1]);
         Destroy(_instantiatedObjects[index2]);
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
