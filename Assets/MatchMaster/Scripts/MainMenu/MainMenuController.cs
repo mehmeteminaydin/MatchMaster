@@ -9,6 +9,7 @@ using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
+    public TextMeshProUGUI PlayerLevel;
     public TextMeshProUGUI LevelText;
     public TextMeshProUGUI Experience;
     public GameObject SettingsPanel;
@@ -34,7 +35,8 @@ public class MainMenuController : MonoBehaviour
         long exp = (20 * (currentPlayerLevelPlusOne * currentPlayerLevelPlusOne)) - (20 * currentPlayerLevelPlusOne);
         long currentExp = SaveGame.Instance.PlayerData.Experience;
         Experience.text = currentExp + " / " + exp.ToString();
-
+        PlayerLevel.text = SaveGame.Instance.PlayerData.PlayerLevel.ToString();
+        
         LevelText.text = "Level:" + SaveGame.Instance.GeneralData.CurrentLevel.ToString();
         _shopPanelColor  = ShopPanelBackground.color;
         _settingsPanelColor = SettingsPanelBackground.color;
