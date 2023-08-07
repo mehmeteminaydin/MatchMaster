@@ -5,6 +5,8 @@ namespace SNG.Save
     [DefaultExecutionOrder(-101)]
     public class SaveGame : MonoBehaviour
     {
+        // in order to set the Application.targetFrameRate, we need to check the device's RAM
+        public int lowRAMThresholdMB = 2048;
         public static SaveGame Instance => s_instance;
         private static SaveGame s_instance;
        
@@ -59,6 +61,17 @@ namespace SNG.Save
         {
             // turn off vSync
             QualitySettings.vSyncCount = 0;
+
+            int systemMemoryMB = SystemInfo.systemMemorySize;
+
+            if (systemMemoryMB <= lowRAMThresholdMB)
+            {
+                Application.targetFrameRate = 30;
+            }
+            else
+            {
+                Application.targetFrameRate = 60;
+            }
             
             _generalData = new GeneralData();
             _playerData = new PlayerData();

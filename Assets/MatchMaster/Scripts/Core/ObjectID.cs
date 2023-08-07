@@ -11,12 +11,15 @@ public class ObjectID : MonoBehaviour
     //Therefore, if I change the name, I need to assign the ids again.
     public int id;
     private Collider _collider;
+    private Collider _objectCollider;
     // the up left corner is = (x = 356, z = -1023), the bottom right corner is = (x = 420, z = -1170)
     // object does not cross the plane which is at y = 526
     void Start()
     {
         // find the hole's collider
         _collider = GameObject.Find("Hole").GetComponent<Collider>();
+
+        _objectCollider = transform.GetComponent<Collider>();
     }
 
 
@@ -42,7 +45,7 @@ public class ObjectID : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 540, transform.position.z);
         }
-        if(_collider.bounds.Intersects(transform.GetComponent<Collider>().bounds)){
+        if(_collider.bounds.Intersects(_objectCollider.bounds)){
             OnSpecificEvent?.Invoke(gameObject);
         }
     }
