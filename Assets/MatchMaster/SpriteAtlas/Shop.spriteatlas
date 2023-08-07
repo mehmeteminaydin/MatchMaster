@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shop
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 63736946f7b4a4f858c30e8757d3be33, type: 3}
+    - {fileID: 2800000, guid: 66c0bc2cbcff44638b8bb62c762a433d, type: 3}
+    - {fileID: 2800000, guid: abbb81e09fa474036beca3385ce2301f, type: 3}
+    - {fileID: 2800000, guid: 6044125051963424f83bedf77feef7eb, type: 3}
+    - {fileID: 2800000, guid: 192594a9b422242e6b9b4ae557da7397, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 6044125051963424f83bedf77feef7eb: 21300000
+    - abbb81e09fa474036beca3385ce2301f: 21300000
+    - 63736946f7b4a4f858c30e8757d3be33: 21300000
+    - 192594a9b422242e6b9b4ae557da7397: 21300000
+    - 66c0bc2cbcff44638b8bb62c762a433d: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 6044125051963424f83bedf77feef7eb, type: 3}
+  - {fileID: 21300000, guid: abbb81e09fa474036beca3385ce2301f, type: 3}
+  - {fileID: 21300000, guid: 63736946f7b4a4f858c30e8757d3be33, type: 3}
+  - {fileID: 21300000, guid: 192594a9b422242e6b9b4ae557da7397, type: 3}
+  - {fileID: 21300000, guid: 66c0bc2cbcff44638b8bb62c762a433d, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - shop_pop_bg_front
+  - price_bttn
+  - item_show_bg
+  - shop_pop_up_bg
+  - item_show_mask,
+  m_RenderDataMap: {}
+  m_Tag: Shop
+  m_IsVariant: 0

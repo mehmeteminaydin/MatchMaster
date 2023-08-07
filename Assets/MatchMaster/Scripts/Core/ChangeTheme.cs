@@ -8,11 +8,16 @@ using SNG.Configs;
 
 public class ChangeTheme : MonoBehaviour
 {
-    public Image ThemeImageToUpdate;
+    public Renderer[] PlaneRendererList;
     // Start is called before the first frame update
     void Start()
     {
-        ThemeImageToUpdate.sprite = Configs.ThemeConfig.ThemeList[SaveGame.Instance.PlayerData.SelectedThemeIndex].ThemeImage;
+        // change all the planes' material to the selected theme material
+        for (int i = 0; i < PlaneRendererList.Length; i++)
+        {
+            PlaneRendererList[i].material = Configs.ThemeConfig.ThemeList[SaveGame.Instance.PlayerData.SelectedThemeIndex].ThemeMaterial;
+        }
+        //ThemeImageToUpdate.sprite = Configs.ThemeConfig.ThemeList[SaveGame.Instance.PlayerData.SelectedThemeIndex].ThemeImage;
     }
 
 }

@@ -112,7 +112,7 @@ public class Dragging : MonoBehaviour
             v3 = Camera.main.ScreenToWorldPoint(v3);
             v3.x += _xOffset;
             v3.z += _zOffset;
-            _toDrag.position = new Vector3(v3.x , _tempLocation.y, v3.z); // Keep the Y position unchanged
+            _toDrag.position = new Vector3(v3.x , _tempLocation.y + 4, v3.z); // Keep the Y position unchanged
         }
 
         if (_dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
@@ -172,6 +172,8 @@ public class Dragging : MonoBehaviour
             // check the id of the objects if matches then destroy them
             if(_toDragObjectLeft.GetComponent<ObjectID>().id == _toDragObjectRight.GetComponent<ObjectID>().id)
             {
+                _toDragObjectLeft.GetComponent<ObjectID>().OnSpecificEvent -= ReactToCollision;
+                _toDragObjectRight.GetComponent<ObjectID>().OnSpecificEvent -= ReactToCollision;
                 Destroy(_toDragObjectLeft);
                 OnObjectDestroyed(_toDragObjectLeft); // ObjectController'a haber veriyoruz
                 Destroy(_toDragObjectRight);
@@ -186,6 +188,7 @@ public class Dragging : MonoBehaviour
                 StartCoroutine(WaitForSecondsAndThrowObjects());
             }
 
+            _toDrag = null;
             _isLeft = false;
             _isRight = false;
         }
@@ -211,6 +214,9 @@ public class Dragging : MonoBehaviour
         _toDragObjectLeft.transform.position = new Vector3(_xCoor, _leftOriginalPosition.y, _zCoor);
         GeneratePosition();
         _toDragObjectRight.transform.position = new Vector3(_xCoor, _rightOriginalPosition.y, _zCoor); 
+
+        _toDragObjectLeft = null;
+        _toDragObjectRight = null;
     }
     
     void OnObjectDestroyed(GameObject gameObject)
@@ -241,13 +247,116 @@ public class Dragging : MonoBehaviour
             _toDragObjectRight = null;
             _isRight = false;
         }
-        
+
+        _toDrag = null;
 
     }
 
     public void GameOver()
     {
         _isGameOver = true;
+    }
+
+    public void CheckLeftHole(Transform toDrag)
+    {
+        if(!_isLeft)
+        {
+            // fine tune dropping position
+            if(_toDrag.position.x < 376)
+            {
+                _toDrag.position = new Vector3(378, toDrag.position.y, toDrag.position.z);
+            }
+            if(_toDrag.position.z > -1146)
+            {
+                _toDrag.position = new Vector3(toDrag.position.x, toDrag.position.y, -1148);
+            }
+            if(_toDrag.position.z < -1166)
+            {
+                _toDrag.position = new Vector3(toDrag.position.x, toDrag.position.y, -1164);
+            }
+            toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+            toDrag.gameObject.tag = "Untagged";
+            _leftOriginalPosition = _tempLocation;
+            _toDragObjectLeft = toDrag.gameObject;
+            _isLeft = true;
+        }
+    }
+
+    public void CheckRightHole(Transform toDrag)
+    {
+        if(!_isRight)
+        {
+            // fine tune dropping position
+            if(_toDrag.position.z > -1146)
+            {
+                _toDrag.position = new Vector3(toDrag.position.x, toDrag.position.y, -1148);
+            }
+            if(_toDrag.position.z < -1166)
+            {
+                _toDrag.position = new Vector3(toDrag.position.x, toDrag.position.y, -1164);
+            }
+            if(_toDrag.position.x > 400)
+            {
+                _toDrag.position = new Vector3(398, toDrag.position.y, toDrag.position.z);
+            }
+            toDrag.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+            toDrag.gameObject.tag = "Untagged";
+            _rightOriginalPosition = _tempLocation;
+            _toDragObjectRight = toDrag.gameObject;
+            _isRight = true;
+        }
+    }
+    
+    public void ReactToCollision(GameObject prefabObject){
+        if(prefabObject == null){
+            return;
+        }
+        if(_toDragObjectLeft){
+            if(prefabObject == _toDragObjectLeft){
+                return;
+            }
+        }
+        if(_toDragObjectRight){
+            if(prefabObject == _toDragObjectRight){
+                return;
+            }
+        }
+        if(_toDrag != null && !_dragging){
+            if(prefabObject == _toDrag.gameObject){
+                if(prefabObject.transform.position.x < 388){
+                    CheckLeftHole(prefabObject.transform);
+                }
+                else if (prefabObject.transform.position.x >= 388){
+                    CheckRightHole(prefabObject.transform);
+                }
+                if (_isLeft && _isRight)
+                {
+                    // check the id of the objects if matches then destroy them
+                    if(_toDragObjectLeft.GetComponent<ObjectID>().id == _toDragObjectRight.GetComponent<ObjectID>().id)
+                    {
+                        _toDragObjectLeft.GetComponent<ObjectID>().OnSpecificEvent -= ReactToCollision;
+                        _toDragObjectRight.GetComponent<ObjectID>().OnSpecificEvent -= ReactToCollision;
+                        Destroy(_toDragObjectLeft);
+                        OnObjectDestroyed(_toDragObjectLeft); // ObjectController'a haber veriyoruz
+                        Destroy(_toDragObjectRight);
+                        OnObjectDestroyed(_toDragObjectRight);
+                        ObjectCounter = ObjectCounter - 2;
+                        if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
+                        {    
+                            AudioManager.instance.PlaySoundEffect("matched_2");
+                        }
+                    }
+                    else{
+                        StartCoroutine(WaitForSecondsAndThrowObjects());
+                    }
+
+                    _toDrag = null;
+                    _isLeft = false;
+                    _isRight = false;
+                }
+            }
+        }
+        
     }
 
 }

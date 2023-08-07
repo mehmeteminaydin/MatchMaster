@@ -8,6 +8,7 @@ using SNG.Configs;
 
 public class ObjectController : MonoBehaviour
 {
+    public Material[] ObjectMaterials;
     public Dragging Dragging;
     public int[] ObjectNumberList;
     public List<GameObject> ObjectList;
@@ -56,6 +57,8 @@ public class ObjectController : MonoBehaviour
                 Vector3 position = new Vector3(_xCoor, 540, _zCoor);
                 newObject.transform.position = position;
                 _instantiatedObjects.Add(newObject);
+                //get the ObjectID script from the newObject
+                newObject.GetComponent<ObjectID>().OnSpecificEvent += Dragging.ReactToCollision;
             }
         }
     }
@@ -142,6 +145,9 @@ public class ObjectController : MonoBehaviour
         // remove the first selected index from the list
         validIndices.Remove(randomIndex1);
         int randomIndex2 = validIndices[_random.Next(0, validIndices.Count)];
+        // change the materials of the objects 
+        _instantiatedObjects[randomIndex1].GetComponent<Renderer>().material = ObjectMaterials[1];
+        _instantiatedObjects[randomIndex2].GetComponent<Renderer>().material = ObjectMaterials[1];
         // Start the coroutine to initiate blinking for the selected twin objects
         StartCoroutine(BlinkObjects(randomIndex1, randomIndex2));
         SaveGame.Instance.PlayerData.HintCounter--;
@@ -191,6 +197,14 @@ public class ObjectController : MonoBehaviour
             }
             
 
+        }
+        if(_instantiatedObjects[index1] != null || _instantiatedObjects[index2] != null){
+            if(_instantiatedObjects[index1] != null){
+                _instantiatedObjects[index1].GetComponent<Renderer>().material = ObjectMaterials[0];
+            }
+            if(_instantiatedObjects[index2] != null){
+                _instantiatedObjects[index2].GetComponent<Renderer>().material = ObjectMaterials[0];
+            }
         }
         _isHintActive = false;
     }
@@ -311,6 +325,8 @@ public class ObjectController : MonoBehaviour
 
         yield return new WaitForSeconds(moveDuration);
         _isMagnetActive = false;
+        _instantiatedObjects[index1].GetComponent<ObjectID>().OnSpecificEvent -= Dragging.ReactToCollision;
+        _instantiatedObjects[index2].GetComponent<ObjectID>().OnSpecificEvent -= Dragging.ReactToCollision;
         Destroy(_instantiatedObjects[index1]);
         Destroy(_instantiatedObjects[index2]);
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn)
