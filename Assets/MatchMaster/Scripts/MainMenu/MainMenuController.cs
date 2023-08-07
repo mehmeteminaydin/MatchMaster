@@ -10,6 +10,7 @@ using TMPro;
 public class MainMenuController : MonoBehaviour
 {
     public TextMeshProUGUI LevelText;
+    public TextMeshProUGUI Experience;
     public GameObject SettingsPanel;
     public GameObject ShopPanel;
     public float FadeTime = 0.05f;
@@ -29,6 +30,11 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int currentPlayerLevelPlusOne = SaveGame.Instance.PlayerData.PlayerLevel + 1;
+        long exp = (20 * (currentPlayerLevelPlusOne * currentPlayerLevelPlusOne)) - (20 * currentPlayerLevelPlusOne);
+        long currentExp = SaveGame.Instance.PlayerData.Experience;
+        Experience.text = currentExp + " / " + exp.ToString();
+
         LevelText.text = "Level:" + SaveGame.Instance.GeneralData.CurrentLevel.ToString();
         _shopPanelColor  = ShopPanelBackground.color;
         _settingsPanelColor = SettingsPanelBackground.color;
