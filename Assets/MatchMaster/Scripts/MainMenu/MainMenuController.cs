@@ -21,6 +21,7 @@ public class MainMenuController : MonoBehaviour
     public RectTransform SettingsRectTransform;
     public Image ShopPanelBackground;
     public Image SettingsPanelBackground;
+    public Image LevelBarImage;
 
     public Button SettingsExitButton;
     public Button ShopExitButton;
@@ -36,12 +37,34 @@ public class MainMenuController : MonoBehaviour
         long currentExp = SaveGame.Instance.PlayerData.Experience;
         Experience.text = currentExp + " / " + exp.ToString();
         PlayerLevel.text = SaveGame.Instance.PlayerData.PlayerLevel.ToString();
+        StartCoroutine(ExperienceBarAnimation((float)currentExp / (float)exp));
         
         LevelText.text = "Level:" + SaveGame.Instance.GeneralData.CurrentLevel.ToString();
         _shopPanelColor  = ShopPanelBackground.color;
         _settingsPanelColor = SettingsPanelBackground.color;
     }
 
+    IEnumerator ExperienceBarAnimation(float ratio)
+    {
+        if(ratio == 0){
+            LevelBarImage.enabled = false;
+            yield break;
+        }
+        else{
+            LevelBarImage.enabled = true;
+            float duration = 0.5f;
+            float time = 0f;
+            while(time < duration){
+                time += Time.deltaTime;
+                float newRatio =  (ratio * (time / duration));
+                LevelBarImage.fillAmount = newRatio;
+                yield return null;
+            }
+            LevelBarImage.fillAmount = ratio;
+        }
+        
+        
+    }
 
     public void OnPlayButtonClicked(){
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){

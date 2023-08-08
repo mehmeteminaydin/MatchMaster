@@ -112,8 +112,10 @@ public class Dragging : MonoBehaviour
             v3 = Camera.main.ScreenToWorldPoint(v3);
             v3.x += _xOffset;
             v3.z += _zOffset;
-            
-            _toDrag.DOMove(new Vector3(v3.x, _tempLocation.y + 4, v3.z), 0.2f);
+            // check if the object is destroyed
+            if(_toDrag != null){
+                _toDrag.DOMove(new Vector3(v3.x, _tempLocation.y + 4, v3.z), 0.2f);
+            }
         }
 
         if (_dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
