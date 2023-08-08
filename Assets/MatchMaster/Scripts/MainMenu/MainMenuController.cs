@@ -9,7 +9,9 @@ using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
+    public TextMeshProUGUI PlayerLevel;
     public TextMeshProUGUI LevelText;
+    public TextMeshProUGUI Experience;
     public GameObject SettingsPanel;
     public GameObject ShopPanel;
     public float FadeTime = 0.05f;
@@ -19,6 +21,7 @@ public class MainMenuController : MonoBehaviour
     public RectTransform SettingsRectTransform;
     public Image ShopPanelBackground;
     public Image SettingsPanelBackground;
+    public Image LevelBarImage;
 
     public Button SettingsExitButton;
     public Button ShopExitButton;
@@ -29,11 +32,39 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int currentPlayerLevelPlusOne = SaveGame.Instance.PlayerData.PlayerLevel + 1;
+        long exp = (20 * (currentPlayerLevelPlusOne * currentPlayerLevelPlusOne)) - (20 * currentPlayerLevelPlusOne);
+        long currentExp = SaveGame.Instance.PlayerData.Experience;
+        Experience.text = currentExp + " / " + exp.ToString();
+        PlayerLevel.text = SaveGame.Instance.PlayerData.PlayerLevel.ToString();
+        StartCoroutine(ExperienceBarAnimation((float)currentExp / (float)exp));
+        
         LevelText.text = "Level:" + SaveGame.Instance.GeneralData.CurrentLevel.ToString();
         _shopPanelColor  = ShopPanelBackground.color;
         _settingsPanelColor = SettingsPanelBackground.color;
     }
 
+    IEnumerator ExperienceBarAnimation(float ratio)
+    {
+        if(ratio == 0){
+            LevelBarImage.enabled = false;
+            yield break;
+        }
+        else{
+            LevelBarImage.enabled = true;
+            float duration = 0.5f;
+            float time = 0f;
+            while(time < duration){
+                time += Time.deltaTime;
+                float newRatio =  (ratio * (time / duration));
+                LevelBarImage.fillAmount = newRatio;
+                yield return null;
+            }
+            LevelBarImage.fillAmount = ratio;
+        }
+        
+        
+    }
 
     public void OnPlayButtonClicked(){
         if(SaveGame.Instance.GeneralData.IsSoundEffectsOn){

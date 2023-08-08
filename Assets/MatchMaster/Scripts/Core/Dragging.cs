@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SNG.Save;
 using SNG.Configs;
-
+using DG.Tweening;
 
 public class Dragging : MonoBehaviour
 {
@@ -112,7 +112,10 @@ public class Dragging : MonoBehaviour
             v3 = Camera.main.ScreenToWorldPoint(v3);
             v3.x += _xOffset;
             v3.z += _zOffset;
-            _toDrag.position = new Vector3(v3.x , _tempLocation.y + 4, v3.z); // Keep the Y position unchanged
+            // check if the object is destroyed
+            if(_toDrag != null){
+                _toDrag.DOMove(new Vector3(v3.x, _tempLocation.y + 4, v3.z), 0.2f);
+            }
         }
 
         if (_dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))

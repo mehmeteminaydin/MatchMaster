@@ -27,9 +27,9 @@ namespace Configuration
 
         public void LastLevelConfig()
         {
-            TotalObjectType = _random.Next(TotalObjectType-2, TotalObjectType+2);
+            TotalObjectType = _random.Next(TotalObjectType-1, TotalObjectType+3);
             TotalObjectCount = TotalObjectType * EachObjectCount;
-            LevelTimeInSeconds = _random.Next((int)(LevelTimeInSeconds-20), (int)(LevelTimeInSeconds+20));
+            LevelTimeInSeconds = _random.Next((int)(LevelTimeInSeconds-10), (int)(LevelTimeInSeconds+30));
         }
         
     }

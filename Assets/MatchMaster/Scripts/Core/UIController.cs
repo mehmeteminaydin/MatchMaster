@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public PlayerLevelController PlayerLevelController;
     public GameObject GameEndScreen;
     public Image GameEndWin;
     public Image GameEndLose;
@@ -134,6 +135,8 @@ public class UIController : MonoBehaviour
 
     public void GameOverWon()
     {
+        PlayerLevelController.LevelUpdate(true);
+
         if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
             SaveGame.Instance.GeneralData.CurrentLevel = 4;
             Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
@@ -144,6 +147,7 @@ public class UIController : MonoBehaviour
                 Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
             }
         }
+        
         _isGameOver = true;
         SaveStar();
         GameEndScreen.SetActive(true);
@@ -155,6 +159,7 @@ public class UIController : MonoBehaviour
         GameEndWin.enabled = true;
         GameEndLose.enabled = false;
     }
+
 
     IEnumerator PlayStarAnimation()
     {
@@ -189,9 +194,12 @@ public class UIController : MonoBehaviour
 
     public void GameOverLost()
     {
+        PlayerLevelController.LevelUpdate(false);
+
         if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
             Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
         }
+
         _isGameOver = true;
 
         Dragging.GameOver();
