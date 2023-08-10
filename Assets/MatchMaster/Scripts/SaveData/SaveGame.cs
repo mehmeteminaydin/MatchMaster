@@ -1,4 +1,6 @@
 using UnityEngine;
+// to check the active scene
+using UnityEngine.SceneManagement;
 
 namespace SNG.Save
 {
@@ -12,9 +14,11 @@ namespace SNG.Save
        
         private const string GeneralDataKey = "mxye)ds";
         private const string PlayerDataKey = "udfsd9d";
+        private const string GameStateKey = "mxye)d0";
 
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private GeneralData _generalData;
+        [SerializeField] private GameState _gameState;
 
         public GeneralData GeneralData
         {
@@ -25,6 +29,12 @@ namespace SNG.Save
         {
             get => _playerData;
             set => _playerData = value;
+        }
+
+        public GameState GameState
+        {
+            get => _gameState;
+            set => _gameState = value;
         }
 
         /// <summary>
@@ -43,6 +53,7 @@ namespace SNG.Save
 
                 _generalData = FileManager.Load<GeneralData>(GeneralDataKey);
                 _playerData = FileManager.Load<PlayerData>(PlayerDataKey);
+                _gameState = FileManager.Load<GameState>(GameStateKey);
             }
             catch (System.Exception ex)
             {
@@ -75,6 +86,7 @@ namespace SNG.Save
             
             _generalData = new GeneralData();
             _playerData = new PlayerData();
+            _gameState = new GameState();
             PlayerPrefs.SetInt("FirstTime", 1);
             PlayerPrefs.Save();
         }
@@ -88,6 +100,11 @@ namespace SNG.Save
             {
                 FileManager.Save(GeneralDataKey, _generalData);
                 FileManager.Save(PlayerDataKey, _playerData);
+                // check the active scene and save the game state accordingly
+                if(SceneManager.GetActiveScene().name == "GameScene"){
+                    GameEvents.Instance.CallOnSaveGame();
+                    FileManager.Save(GameStateKey, _gameState);
+                }
             }
             catch (System.Exception ex)
             {

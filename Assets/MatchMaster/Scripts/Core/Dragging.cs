@@ -42,7 +42,8 @@ public class Dragging : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ObjectCounter = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].TotalObjectCount;
+        
+        //ObjectCounter = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].TotalObjectCount;
         _collider = HoleObject.GetComponent<Collider>();
     }
     // Update is called once per frame
@@ -60,6 +61,7 @@ public class Dragging : MonoBehaviour
 
         if (ObjectCounter == 0)
         {
+            SaveGame.Instance.GeneralData.IsGameOver = true;
             _isGameOver = true;
             UIController.GameOverWon();
             return;
@@ -257,6 +259,7 @@ public class Dragging : MonoBehaviour
 
     public void GameOver()
     {
+        SaveGame.Instance.GeneralData.IsGameOver = true;
         _isGameOver = true;
     }
 

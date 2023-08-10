@@ -32,6 +32,11 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(SaveGame.Instance.GameState.ShouldBeLoaded == true){
+            SaveGame.Instance.GameState.ShouldBeLoaded = false;
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+        }
+
         int currentPlayerLevelPlusOne = SaveGame.Instance.PlayerData.PlayerLevel + 1;
         long exp = (20 * (currentPlayerLevelPlusOne * currentPlayerLevelPlusOne)) - (20 * currentPlayerLevelPlusOne);
         long currentExp = SaveGame.Instance.PlayerData.Experience;

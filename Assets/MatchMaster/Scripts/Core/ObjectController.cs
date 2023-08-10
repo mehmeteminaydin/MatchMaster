@@ -5,10 +5,13 @@ using UnityEngine.UI;
 using DG.Tweening;
 using SNG.Save;
 using SNG.Configs;
+using UnityEngine.SceneManagement;
+
 
 public class ObjectController : MonoBehaviour
 {
     public Material[] ObjectMaterials;
+    public UIController UIController;
     public Dragging Dragging;
     public int[] ObjectNumberList;
     public List<GameObject> ObjectList;
@@ -27,40 +30,93 @@ public class ObjectController : MonoBehaviour
     private int _zCoor = -1070;
     private bool _isHintActive = false;
     private bool _isMagnetActive = false;
+    [SerializeField]
     private List<GameObject> _instantiatedObjects = new List<GameObject>();
     private Vector3 _leftHolePosition;
     private Vector3 _rightHolePosition;
 
+
     // Start is called before the first frame update
     void Start()
     {   
-        TotalObjectType = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].TotalObjectType;
-        EachObjectCount = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].EachObjectCount;
+        SaveGame.Instance.GeneralData.IsGameOver = false;
+        GameEvents.Instance.OnSaveGame += OnSaveGame;
+        if(SaveGame.Instance.GameState.LoadGameScene == true){
+            SaveGame.Instance.GameState.LoadGameScene = false;
+            UIController.CurrentTime = SaveGame.Instance.GameState.RemainingTime;
+            int totalObjectCount = 0;
+            for (int k = 0; k < SaveGame.Instance.GameState.ObjectIDList.Count; k++){
+                if(SaveGame.Instance.GameState.ObjectIDList[k] == -1){
+                    continue;
+                }
+                totalObjectCount++;
+            }
+            Dragging.ObjectCounter = totalObjectCount;
+            SaveGame.Instance.PlayerData.HintCounter = SaveGame.Instance.GameState.RemainingHint;
+            SaveGame.Instance.PlayerData.MagnetCounter = SaveGame.Instance.GameState.RemainingMagnet;
 
-        SaveGame.Instance.PlayerData.HintCounter = 9;
-        SaveGame.Instance.PlayerData.MagnetCounter = 9;
-        
-        _leftHolePosition = new Vector3(380, 542, -1152);
-        _rightHolePosition = new Vector3(394, 542, -1152);
+            HintText.text =  SaveGame.Instance.PlayerData.HintCounter.ToString();
+            MagnetText.text =  SaveGame.Instance.PlayerData.MagnetCounter.ToString();
 
-        // it shows the remaining hint count on the screen
-        HintText.text =  SaveGame.Instance.PlayerData.HintCounter.ToString();
-        MagnetText.text =  SaveGame.Instance.PlayerData.MagnetCounter.ToString();
+            _leftHolePosition = new Vector3(380, 542, -1152);
+            _rightHolePosition = new Vector3(394, 542, -1152);
 
-        CreateNumberList();
-        
-        for (int i = 0; i < TotalObjectType; i++)
-        {
-            for(int j = 0; j < EachObjectCount; j++){
-                GameObject newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
+            EachObjectCount = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].EachObjectCount;
+            TotalObjectType = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].TotalObjectType;
+            
+            for(int i = 0; i < SaveGame.Instance.GameState.ObjectIDList.Count; i++){
+                if(SaveGame.Instance.GameState.ObjectIDList[i] == -1){
+                    GameObject nullObject = null;
+                    _instantiatedObjects.Add(nullObject);
+                    continue;
+                }
+                GameObject newObject = Instantiate(ObjectList[SaveGame.Instance.GameState.ObjectIDList[i]]);
                 GeneratePosition();
                 Vector3 position = new Vector3(_xCoor, 540, _zCoor);
                 newObject.transform.position = position;
                 _instantiatedObjects.Add(newObject);
-                //get the ObjectID script from the newObject
                 newObject.GetComponent<ObjectID>().OnSpecificEvent += Dragging.ReactToCollision;
             }
+            
+
         }
+        else{
+            UIController.CurrentTime = UIController.TotalTime;
+            Dragging.ObjectCounter = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].TotalObjectCount;
+            TotalObjectType = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].TotalObjectType;
+            EachObjectCount = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].EachObjectCount;
+
+            SaveGame.Instance.PlayerData.HintCounter = 9;
+            SaveGame.Instance.PlayerData.MagnetCounter = 9;
+
+            _leftHolePosition = new Vector3(380, 542, -1152);
+            _rightHolePosition = new Vector3(394, 542, -1152);
+
+            // it shows the remaining hint count on the screen
+            HintText.text =  SaveGame.Instance.PlayerData.HintCounter.ToString();
+            MagnetText.text =  SaveGame.Instance.PlayerData.MagnetCounter.ToString();
+
+            CreateNumberList();
+
+            for (int i = 0; i < TotalObjectType; i++)
+            {
+                for(int j = 0; j < EachObjectCount; j++){
+                    GameObject newObject = Instantiate(ObjectList[ObjectNumberList[i]]);
+                    GeneratePosition();
+                    Vector3 position = new Vector3(_xCoor, 540, _zCoor);
+                    newObject.transform.position = position;
+                    _instantiatedObjects.Add(newObject);
+                    //get the ObjectID script from the newObject
+                    newObject.GetComponent<ObjectID>().OnSpecificEvent += Dragging.ReactToCollision;
+                }
+            }
+        }
+        
+    }
+
+    void OnDestroy()
+    {
+        GameEvents.Instance.OnSaveGame -= OnSaveGame;
     }
 
     
@@ -371,6 +427,39 @@ public class ObjectController : MonoBehaviour
             if(_instantiatedObjects[i] != null){
                 _instantiatedObjects[i].gameObject.tag = "Untagged";
             }
+        }
+    }
+
+    private void OnSaveGame()
+    {
+        if(SaveGame.Instance.GeneralData.IsGameOver == false){
+            // check the scene name and save the game
+            SaveGame.Instance.GameState.ShouldBeLoaded = true;
+            SaveGame.Instance.GameState.LoadGameScene = true;
+            SaveGame.Instance.GameState.RemainingTime =  UIController.CurrentTime;
+            SaveGame.Instance.GameState.RemainingHint  = SaveGame.Instance.PlayerData.HintCounter;
+            SaveGame.Instance.GameState.RemainingMagnet = SaveGame.Instance.PlayerData.MagnetCounter;
+
+            // first empty the list then fill it with the current objects
+            SaveGame.Instance.GameState.ObjectIDList.Clear();
+
+
+            for(int i = 0; i < _instantiatedObjects.Count; i++){
+                if(_instantiatedObjects[i] != null){
+                    SaveGame.Instance.GameState.ObjectIDList.Add(_instantiatedObjects[i].GetComponent<ObjectID>().id);
+                }
+                else{
+                    SaveGame.Instance.GameState.ObjectIDList.Add(-1);
+                }
+            }
+        }
+        else{
+            SaveGame.Instance.GameState.ShouldBeLoaded = false;
+            SaveGame.Instance.GameState.LoadGameScene = false;
+            SaveGame.Instance.GameState.RemainingTime =  0;
+            SaveGame.Instance.GameState.RemainingHint  = 0;
+            SaveGame.Instance.GameState.RemainingMagnet = 0;
+            SaveGame.Instance.GameState.ObjectIDList.Clear();
         }
     }
     

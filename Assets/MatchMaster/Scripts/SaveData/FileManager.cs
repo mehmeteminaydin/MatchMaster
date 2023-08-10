@@ -7,7 +7,7 @@ namespace SNG.Save
     public static class FileManager
     {
         private const int XorKey = 96;
-        private static string s_dataPath = Path.Combine(Application.persistentDataPath, "SngDataMatchMaster");
+        private static string s_dataPath = Path.Combine(Application.persistentDataPath, "Data");
 
         /// <summary>
         /// Constructor. Creates a directory to save files
@@ -40,8 +40,12 @@ namespace SNG.Save
         public static T Load<T>(string filename)
         {
             string path = Path.Combine(s_dataPath, filename);
-            if (File.Exists(path))
+            if (File.Exists(path)){
                 return JsonUtility.FromJson<T>(Decrypt(File.ReadAllBytes(path)));
+
+            }
+                
+                
             return default;
         }
 

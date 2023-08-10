@@ -4710,6 +4710,7 @@ MonoBehaviour:
   ObjectMaterials:
   - {fileID: 2100000, guid: dcf86e29809becd468a6224a22ad8abb, type: 2}
   - {fileID: 2100000, guid: 8c15d579eda634742b00297ce34562cc, type: 2}
+  UIController: {fileID: 744016082}
   Dragging: {fileID: 963194229}
   ObjectNumberList: 
   ObjectList:
@@ -6000,6 +6001,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 907247113994694144, guid: b27f5b992ea0f40e4a75bd00e939ed66, type: 3}
+      propertyPath: ObjectController
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2643025417561545606, guid: b27f5b992ea0f40e4a75bd00e939ed66, type: 3}
       propertyPath: m_Name
       value: SaveData

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using SNG.Configs;
+using System.Collections.Generic;
+
 
 
 namespace SNG.Save
@@ -13,8 +15,12 @@ namespace SNG.Save
         public bool IsMusicOn;
         public bool[] IsThemeUnlocked;
         public int NumberOfThemes;
+        public bool IsGameOver;
+        
+
 
         public GeneralData(){
+            IsGameOver = false;
             CurrentLevel = 1;
             IsSoundEffectsOn = true;
             IsMusicOn = true;
@@ -29,6 +35,30 @@ namespace SNG.Save
                 }
             }
             
+        }
+    }
+
+    // keep the Game State
+    [System.Serializable]
+    public class GameState
+    {
+        public bool ShouldBeLoaded;
+        public bool LoadGameScene;
+        public float RemainingTime;
+        public int RemainingHint;
+        public int RemainingMagnet;
+        public List<int> ObjectIDList;
+        public List<int> ObjectIndexList;
+        
+
+
+        public GameState(){
+            ShouldBeLoaded = false;
+            LoadGameScene = false;
+            RemainingTime = 0;
+            RemainingHint = 0;
+            RemainingMagnet = 0;    
+            ObjectIDList = new List<int>();
         }
     }
 

@@ -11,8 +11,8 @@ namespace SNG.Save
     public class PlayerData
     {
         public long TotalStar;
-        public long HintCounter;
-        public long MagnetCounter;
+        public int HintCounter;
+        public int MagnetCounter;
         public int SelectedThemeIndex;
         public long Experience;
         public int PlayerLevel;

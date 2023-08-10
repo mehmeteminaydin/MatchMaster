@@ -22,14 +22,14 @@ public class UIController : MonoBehaviour
     public List<Image> GameEndStarImages;
     public TMPro.TextMeshProUGUI TotalStarCount;
     public TMPro.TextMeshProUGUI TimerText;
-
+    public float CurrentTime;
     public float TotalTime; // Total time in seconds
     
     private bool _isStarAnimationPlaying = false;
     private bool _isGameOver = false;
     private bool _isTimeOver = false;
     private long _starCount = 3;
-    private float _currentTime;
+    
     private System.Random _random = new System.Random();
 
     // Start is called before the first frame update
@@ -53,11 +53,9 @@ public class UIController : MonoBehaviour
         StarBGImages[2].GetComponent<RectTransform>().localPosition = new Vector3(star3X, StarBGImages[2].GetComponent<RectTransform>().localPosition.y, StarBGImages[2].GetComponent<RectTransform>().localPosition.z);
         
 
-    
-
         TotalTime = Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LevelTimeInSeconds;
         TotalStarCount.text = SaveGame.Instance.PlayerData.TotalStar.ToString();
-        _currentTime = TotalTime;
+
     }
 
     // Update is called once per frame
@@ -66,32 +64,32 @@ public class UIController : MonoBehaviour
         if(_isTimeOver || _isGameOver){
             return;
         }
-        _currentTime -= Time.deltaTime;
+        CurrentTime -= Time.deltaTime;
 
         // Calculate minutes and seconds
-        int minutes = Mathf.FloorToInt(_currentTime / 60f);
-        int seconds = Mathf.FloorToInt(_currentTime % 60f);
+        int minutes = Mathf.FloorToInt(CurrentTime / 60f);
+        int seconds = Mathf.FloorToInt(CurrentTime % 60f);
 
         //update the UI text with the current time
         TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        if(_currentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[2]){
+        if(CurrentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[2]){
             _starCount = 3;
         }
-        else if(_currentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[1] && _currentTime/TotalTime < Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[2]){
+        else if(CurrentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[1] && CurrentTime/TotalTime < Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[2]){
             _starCount = 2;
         }
-        else if(_currentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[0] && _currentTime/TotalTime < Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[1]){
+        else if(CurrentTime/TotalTime >= Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[0] && CurrentTime/TotalTime < Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].StarEarningRateList[1]){
             _starCount = 1;
         }
         else{
             _starCount = 0;
         }
-        if(_currentTime <= 10){
+        if(CurrentTime <= 10){
             TimerText.color = Color.red;
         }
-        if (_currentTime <= 0)
+        if (CurrentTime <= 0)
         {
-            _currentTime = 0;
+            CurrentTime = 0;
             TimerText.text = string.Format("{0:00}:{1:00}", 0, 0);
             _isTimeOver = true;
             TimeBarImage.enabled = false; // Hide the green bar
@@ -100,7 +98,7 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            float remainingRatio = _currentTime / TotalTime;
+            float remainingRatio = CurrentTime / TotalTime;
             TimeBarImage.fillAmount = remainingRatio; // Set the fill amount of the green bar
             TimeBarImage.enabled = true; // Make the green bar visible
         }
@@ -147,7 +145,7 @@ public class UIController : MonoBehaviour
                 Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
             }
         }
-        
+        SaveGame.Instance.GeneralData.IsGameOver = true;
         _isGameOver = true;
         SaveStar();
         GameEndScreen.SetActive(true);
@@ -199,7 +197,7 @@ public class UIController : MonoBehaviour
         if(SaveGame.Instance.GeneralData.CurrentLevel == 4){
             Configs.LevelConfig.LevelList[SaveGame.Instance.GeneralData.CurrentLevel - 1].LastLevelConfig();
         }
-
+        SaveGame.Instance.GeneralData.IsGameOver = true;
         _isGameOver = true;
 
         Dragging.GameOver();
@@ -238,4 +236,5 @@ public class UIController : MonoBehaviour
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
     }
+
 }
