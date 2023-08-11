@@ -41,7 +41,7 @@ public class ObjectController : MonoBehaviour
     {   
         SaveGame.Instance.GeneralData.IsGameOver = false;
         GameEvents.Instance.OnSaveGame += OnSaveGame;
-        if(SaveGame.Instance.GameState.LoadGameScene == true){
+        if((SaveGame.Instance != null)&&(SaveGame.Instance.GameState.LoadGameScene == true)){
             SaveGame.Instance.GameState.LoadGameScene = false;
             UIController.CurrentTime = SaveGame.Instance.GameState.RemainingTime;
             int totalObjectCount = 0;

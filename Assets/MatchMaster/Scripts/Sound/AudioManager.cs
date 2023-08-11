@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     public Sound[] backgroundMusicSounds;
     public Sound[] soundEffectSounds;
 
-    private AudioSource backgroundMusicSource;
+    public AudioSource backgroundMusicSource;
     private AudioSource soundEffectSource;
 
     void Awake()
@@ -53,24 +53,19 @@ public class AudioManager : MonoBehaviour
             s.source.outputAudioMixerGroup = s.mixer;
         }
 
-        if (SaveGame.Instance.GeneralData.IsMusicOn)
+        if (!SaveGame.Instance.GeneralData.IsMusicOn)
         {
-            PlayBackgroundMusic("bg_music");
+            backgroundMusicSource.volume = 0;
         }
+        else{
+            backgroundMusicSource.volume = 1;
+        }
+        
+        backgroundMusicSource.Play();
     }
 
-    public void PlayBackgroundMusic(string sound)
-    {
-        Sound s = Array.Find(backgroundMusicSounds, item => item.name == sound);
-        if (s != null)
-        {
-            backgroundMusicSource.PlayOneShot(s.clip);
-        }
-        else
-        {
-            Debug.LogWarning("Background music not found: " + sound);
-        }
-    }
+    
+    
 
 	public void StopBackgroundMusic(string sound)
 	{

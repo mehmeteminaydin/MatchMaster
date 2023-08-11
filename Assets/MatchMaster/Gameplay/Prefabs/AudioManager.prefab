@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8557770653759954429
 MonoBehaviour:
@@ -44,18 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1b1a46ccba24f9785f16c28648be09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
+  backgroundMusicSounds:
   - name: bg_music
     clip: {fileID: 8300000, guid: 1fd4292c99ea14b49a87329b6ff4577d, type: 3}
     mixer: {fileID: 0}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  soundEffectSounds:
   - name: click
     clip: {fileID: 8300000, guid: 2f0e90e4ecbc5485b9e3e4e5d7d4b25a, type: 3}
     mixer: {fileID: 0}
-    volume: 0.5
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}

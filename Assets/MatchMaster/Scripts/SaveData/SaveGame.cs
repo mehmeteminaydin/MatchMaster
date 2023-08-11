@@ -101,10 +101,10 @@ namespace SNG.Save
                 FileManager.Save(GeneralDataKey, _generalData);
                 FileManager.Save(PlayerDataKey, _playerData);
                 // check the active scene and save the game state accordingly
-                if(SceneManager.GetActiveScene().name == "GameScene"){
-                    GameEvents.Instance.CallOnSaveGame();
-                    FileManager.Save(GameStateKey, _gameState);
-                }
+                
+                GameEvents.Instance.CallOnSaveGame();
+                FileManager.Save(GameStateKey, _gameState);
+                
             }
             catch (System.Exception ex)
             {

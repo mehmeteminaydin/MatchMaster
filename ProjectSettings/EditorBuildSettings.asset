@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/MatchMaster/_Scenes/IntroScene.unity
+    guid: c9eb30d096a114de3ab8fcde1c14a6a4
+  - enabled: 1
     path: Assets/MatchMaster/_Scenes/MainMenuScene.unity
     guid: ce2fd37c8b3f446f8bb3f787057308de
   - enabled: 1

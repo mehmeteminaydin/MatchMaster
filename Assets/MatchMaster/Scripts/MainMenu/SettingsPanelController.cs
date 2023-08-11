@@ -46,13 +46,13 @@ public class SettingsPanelController : MonoBehaviour
         // Change the sound button background image when pressed
         if(MusicButton.sprite == TurnedOn){
             SaveGame.Instance.GeneralData.IsMusicOn = false;
-            AudioManager.instance.StopBackgroundMusic("bg_music");
+            AudioManager.instance.backgroundMusicSource.volume = 0;
             // set the position of the ButtonCircleImage as LeftSight position
             MusicButtonCircleImage.transform.position = MusicLeftSight.transform.position;
             MusicButton.sprite = TurnedOff;
         }else{
             SaveGame.Instance.GeneralData.IsMusicOn = true;
-            AudioManager.instance.PlayBackgroundMusic("bg_music");
+            AudioManager.instance.backgroundMusicSource.volume = 1;
             // set the position of the ButtonCircleImage as RightSight position
             MusicButtonCircleImage.transform.position = MusicRightSight.transform.position;
             MusicButton.sprite = TurnedOn;

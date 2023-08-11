@@ -179,8 +179,10 @@ public class Dragging : MonoBehaviour
             {
                 _toDragObjectLeft.GetComponent<ObjectID>().OnSpecificEvent -= ReactToCollision;
                 _toDragObjectRight.GetComponent<ObjectID>().OnSpecificEvent -= ReactToCollision;
+                _toDragObjectLeft.transform.DOKill();
                 Destroy(_toDragObjectLeft);
                 OnObjectDestroyed(_toDragObjectLeft); // ObjectController'a haber veriyoruz
+                _toDragObjectRight.transform.DOKill();
                 Destroy(_toDragObjectRight);
                 OnObjectDestroyed(_toDragObjectRight);
                 ObjectCounter = ObjectCounter - 2;
@@ -342,8 +344,11 @@ public class Dragging : MonoBehaviour
                     {
                         _toDragObjectLeft.GetComponent<ObjectID>().OnSpecificEvent -= ReactToCollision;
                         _toDragObjectRight.GetComponent<ObjectID>().OnSpecificEvent -= ReactToCollision;
+                        _toDragObjectLeft.transform.DOKill();
                         Destroy(_toDragObjectLeft);
                         OnObjectDestroyed(_toDragObjectLeft); // ObjectController'a haber veriyoruz
+                        
+                        _toDragObjectRight.transform.DOKill();
                         Destroy(_toDragObjectRight);
                         OnObjectDestroyed(_toDragObjectRight);
                         ObjectCounter = ObjectCounter - 2;
